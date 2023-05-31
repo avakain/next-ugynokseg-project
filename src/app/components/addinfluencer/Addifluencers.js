@@ -7,11 +7,14 @@ import { MdOutlineLibraryAdd } from 'react-icons/md';
 import Modal from "../modal/Modal";
 import { useContext } from 'react';
 import { ModalContext } from '../../../context/ModalContext';
+import { collection, doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { db } from "@/firebase/config";
 
 export default function AddInfluencers() {
   const [influencers, setInfluencers] = useState([]);
   const [edit, setEdit] = useState(false);
   const { isOpen, setOpen } = useContext(ModalContext)
+  const [updateFlag, setUpdateFlag] = useState(false);
   const [form, setForm] = useState({
     image: '',
     name: '',
@@ -20,6 +23,7 @@ export default function AddInfluencers() {
       tiktok: '',
     },
   });
+
 
   useEffect(() => {
     const fetchInfluencers = async () => {
@@ -35,29 +39,38 @@ export default function AddInfluencers() {
       }
     };
     fetchInfluencers();
-  }, [isOpen]);
+  }, [updateFlag]);
 
   const handleEdit = (index) => {
     setEdit(index);
     setForm({
-      image: influencers[index].image,
       name: influencers[index].name,
       socialmedia: {
-        instagram: influencers[index].socialmedia.instagram,
         tiktok: influencers[index].socialmedia.tiktok,
+        instagram: influencers[index].socialmedia.instagram,
       },
     });
   };
 
-  const handleSave = (index) => {
-    // Implement your save logic here
-    console.log('Save:', form.image, form.name, form.socialmedia.instagram, form.socialmedia.tiktok);
-    setEdit(false);
-  };
 
-  const handleDelete = (index) => {
-    // Implement your delete logic here
-    console.log('Delete:', index);
+  const handleSave = async (index) => {
+    setEdit(false);
+    const documentId = influencers[index].id;
+    const documentRef = doc(db, "influencers", documentId);
+    await setDoc(documentRef, {
+      name: form.name,
+      socialmedia: {
+        tiktok: form.socialmedia.tiktok,
+        instagram: form.socialmedia.instagram,
+      },
+    });
+    setUpdateFlag(!updateFlag);
+  }
+
+  const handleDelete = async (index) => {
+    const documentId = influencers[index].id;
+    const documentRef = doc(db, "influencers", documentId);
+    await deleteDoc(documentRef);
   };
 
   const handleModal = () => {

@@ -7,12 +7,15 @@ import { MdOutlineLibraryAdd } from 'react-icons/md';
 import Modal from "../modal/Modal";
 import { useContext } from 'react';
 import { ModalContext } from '../../../context/ModalContext';
+import { doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { db } from "@/firebase/config";
 
 
 export default function Addresult() {
   const [results, setResults] = useState([]);
   const [edit, setEdit] = useState(false);
   const { isOpen, setOpen } = useContext(ModalContext)
+  const [updateFlag, setUpdateFlag] = useState(false);
   const [form, setForm] = useState({
     duration: '',
     name: '',
@@ -30,7 +33,7 @@ export default function Addresult() {
       }
     };
     fetchData();
-  }, [isOpen]);
+  }, [updateFlag]);
 
   const handleEdit = (index) => {
     setEdit(index);
@@ -42,16 +45,26 @@ export default function Addresult() {
     });
   };
 
-  const handleSave = (index) => {
-    // Implement your save logic here
-    console.log('Save:', form.name, form.duration);
+  const handleSave = async (index) => {
     setEdit(false);
-  };
-
-  const handleDelete = (index) => {
-    // Implement your delete logic here
-    console.log('Delete:', index);
+    const documentId = results[index].id;
+    const documentRef = doc(db, "results", documentId);
+    await setDoc(documentRef, {
+      duration: form.duration,
+      name: form.name,
+      subscribers: form.subscribers,
+      views: form.views,
+    });
+    setUpdateFlag(!updateFlag);
   }
+
+
+  const handleDelete = async (index) => {
+    const documentId = results[index].id;
+    const documentRef = doc(db, "results", documentId);
+    await deleteDoc(documentRef);
+    setUpdateFlag(!updateFlag);
+  };
 
   const handleModal = () => {
     setOpen(!isOpen);
@@ -144,6 +157,7 @@ export default function Addresult() {
               </div>
               <div>
                 <BsFillTrash3Fill
+                  onClick={() => handleDelete(index)}
                   style={{ cursor: 'pointer' }}
 
 

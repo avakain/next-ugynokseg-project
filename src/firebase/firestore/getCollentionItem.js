@@ -3,10 +3,7 @@ import firebase_app from "../config";
 
 const db = getFirestore(firebase_app);
 
-export default async function getDocuments(name) {
-  let result = null;
-  let error = null;
-
+export default async function getCollentionItem(name) {
   try {
     const querySnapshot = await getDocs(collection(db, name));
     const documents = querySnapshot.docs.map((doc) => {
@@ -14,10 +11,10 @@ export default async function getDocuments(name) {
       const documentId = doc.id;
       return { id: documentId, ...documentData };
     });
-    result = documents;
-  } catch (e) {
-    error = e;
+    console.log(documents);
+  } catch (error) {
+    console.log(error);
   }
+};
 
-  return { result, error };
-}
+

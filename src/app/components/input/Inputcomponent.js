@@ -28,6 +28,25 @@ const InputComponent = ({
     );
   }
 
+  else if (file) {
+    return (
+      <div className="grid">
+        <label htmlFor={id} className="text-lg">
+          {label}
+        </label>
+        <input
+          type="file"
+          id={id}
+          className="hidden"
+          accept="image/*"
+        />
+        <AiOutlineUpload
+          size={30}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="grid">
       <label htmlFor={id} className="text-lg">
