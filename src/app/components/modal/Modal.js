@@ -1,11 +1,13 @@
-
 import InputComponent from '../input/Inputcomponent';
 import { IoIosSave } from 'react-icons/io';
 import { useContext } from 'react';
 import { ModalContext } from '../../../context/ModalContext';
 import { RxCross1 } from 'react-icons/rx';
 import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../../firebase/config';
+import { db, storage } from '../../../firebase/config';
+import { ref, uploadBytes } from 'firebase/storage';
+import { useState } from 'react';
+
 
 
 export default function Modal({
@@ -16,15 +18,7 @@ export default function Modal({
   setForm }) {
 
   const { isOpen, setOpen } = useContext(ModalContext);
-
-  function getDocument() {
-    const result = simpleDoc('results')
-
-    return console.log(result)
-  }
-
-
-
+  const [imageUpload, setImageUpload] = useState(null);
 
   function save() {
     if (result) {
@@ -45,9 +39,11 @@ export default function Modal({
           console.error('Error adding document: ', error);
         });
     } else if (influencer) {
+
       addDoc(collection(db, 'influencers'), form)
         .then(() => {
           setOpen(!isOpen);
+          uploadImage();
         })
         .catch((error) => {
           console.error('Error adding document: ', error);
@@ -55,7 +51,15 @@ export default function Modal({
     }
   }
 
-
+  const uploadImage = () => {
+    if (imageUpload == null) return;
+    else {
+      const storageRef = ref(storage, `influencers/${form.name.toLowerCase().replace(/\s+/g, '-')}`);
+      uploadBytes(storageRef, imageUpload).then(() => {
+        alert('Sikeres feltöltés!');
+      });
+    }
+  }
 
   if (influencer) {
     return (
@@ -68,6 +72,7 @@ export default function Modal({
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Név"
+                    required
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                   />
@@ -85,25 +90,51 @@ export default function Modal({
                     onChange={(e) => setForm({ ...form, socialmedia: { ...form.socialmedia, instagram: e.target.value } })}
                     type="number"
                   />
-                  <InputComponent
-                    id={Math.floor(Math.random() * 10000) + 1}
-                    label="Kép feltöltés"
-                    value={form.image}
-                    onChange={(e) => setForm({ ...form, image: e.target.value })}
-                    type="text"
-                  />
+                  <div>
+                    <div className="grid ">
+                      <label htmlFor={`influencer${influencer.name}`} className="text-lg">
+                        {influencer.imageLink === '' ? 'Kép feltöltés' : 'Feltöltött kép:'}
+                      </label>
+                      <input
+                        required
+                        type="file"
+                        id={`influencer${influencer.name}`}
+                        className="hidden"
+                        accept="image/*"
+                        onChange={(e) => setImageUpload(e.target.files[0])}
+                      />
+                      <label htmlFor={`influencer${influencer.name}`} className="cursor-pointer">
+                        {influencer.imageLink === '' ? <AiOutlineUpload size={30} /> : ''}
+                        <div className="flex">
+                          <div className="mr-5">
+                            <p className="text-lg italic">{influencer.imageLink ? extractFileNameFromURL(influencer.imageLink) : ''}</p>
+                          </div>
+                          <div className="mt-1
+                          ">
+                            <RxCross1
+                              className="text-red-500" size={20} />
+                          </div>
+                        </div>
+                      </label>
+
+                    </div>
+                  </div>
                 </form>
               </div>
               <div className="flex justify-end mt-5 my-1">
                 <div
                   onClick={() => {
                     save();
+                    uploadImage();
                   }}
                 >
                   <IoIosSave
                     size={25}
                     style={{ cursor: 'pointer' }}
-                    className="mr-5" />
+                    className="mr-5"
+                    onClick={() => uploadImage()}
+                  />
+
                 </div>
                 <div>
                   <RxCross1
@@ -141,6 +172,7 @@ export default function Modal({
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Név"
+                    required
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                   />
@@ -213,6 +245,7 @@ export default function Modal({
               <div className="grid ">
                 <form>
                   <InputComponent
+                    required
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Név"
                     value={form.name}
