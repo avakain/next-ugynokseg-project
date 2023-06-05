@@ -83,6 +83,7 @@ export default function Modal({
       try {
         const snapshot = await uploadBytes(storageRef, imageUpload);
         const downloadURL = await getDownloadURL(snapshot.ref);
+
         setForms({
           ...forms,
           influencer: {
