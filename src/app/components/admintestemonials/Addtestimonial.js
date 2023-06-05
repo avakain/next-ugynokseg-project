@@ -1,4 +1,3 @@
-
 import getDoument from "@/firebase/firestore/getData";
 import { useState, useEffect } from 'react';
 import { BsPencil, BsFillTrash3Fill } from 'react-icons/bs';
@@ -8,16 +7,15 @@ import { MdOutlineLibraryAdd } from 'react-icons/md';
 import Modal from "../modal/Modal";
 import { useContext } from 'react';
 import { ModalContext } from '../../../context/ModalContext';
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "@/firebase/config";
-import getCollentionItem from "@/firebase/firestore/getCollentionItem";
-
+import { doc, deleteDoc, setDoc } from "firebase/firestore";
+import { db, storage } from "@/firebase/config";
 
 
 export default function Addresult() {
   const [testimonials, setTestimonials] = useState([]);
   const [edit, setEdit] = useState(false);
   const { isOpen, setOpen } = useContext(ModalContext);
+  const [reRender, setReRender] = useState(false);
   const [form, setForm] = useState({
     name: '',
     content: '',
@@ -26,7 +24,6 @@ export default function Addresult() {
   useEffect(() => {
     const fetchData = async () => {
       const { result, error } = await getDoument('testimonials');
-
       if (error) {
         console.log(error);
       } else {
@@ -34,7 +31,7 @@ export default function Addresult() {
       }
     };
     fetchData();
-  }, [isOpen]);
+  }, [reRender]);
 
   const handleEdit = (index) => {
     setEdit(index);
@@ -44,19 +41,23 @@ export default function Addresult() {
     });
   };
 
-  const handleSave = (index) => {
-    // Implement your save logic here
-
+  const handleSave = async (index) => {
     setEdit(false);
-  };
-
+    const documentId = testimonials[index].id;
+    const documentRef = doc(db, "testimonials", documentId);
+    await setDoc(documentRef, {
+      name: form.name,
+      content: form.content,
+    });
+    setReRender(!reRender);
+  }
 
   const handleDelete = async (index) => {
     const documentId = testimonials[index].id;
     const documentRef = doc(db, "testimonials", documentId);
     await deleteDoc(documentRef);
+    setReRender(!reRender);
   };
-
 
   const handleModal = () => {
     setOpen(!isOpen);
@@ -70,7 +71,10 @@ export default function Addresult() {
           className="flex flex-col"
           onClick={handleModal}
         >
-          <MdOutlineLibraryAdd size={30} />
+          <MdOutlineLibraryAdd
+            size={30}
+            className="cursor-pointer"
+          />
         </div>
       </div>
       <div>
@@ -84,7 +88,7 @@ export default function Addresult() {
         )}
         {testimonials.map((testimonial, index) => (
           <div
-            key={testimonial.name}
+            key={testimonial.id}
             className={`flex ${edit !== index ? 'xs:flex-row border-gray-200 ' : 'xs:flex-col border-red-400 bg-gray-100'} justify-between border-2 font-light  border-gray-200 p-3 rounded-lg my-2`}
           >
             <div className="sm:grid">
@@ -92,6 +96,7 @@ export default function Addresult() {
                 <div className="grid">
                   <form>
                     <InputComponent
+                      required
                       id={testimonial.name}
                       label="Név"
                       value={form.name}
@@ -118,8 +123,6 @@ export default function Addresult() {
                   } else {
                     handleEdit(index);
                   }
-
-
                 }}
               >
                 {edit === index ? (

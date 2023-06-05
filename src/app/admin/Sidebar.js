@@ -7,10 +7,10 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { BiLogIn, BiMessageAdd } from "react-icons/bi";
 import { AiFillSignal } from "react-icons/ai";
-import Addreview from "../components/addreview/Addtestimonial";
-import Addifluencers from "../components/addinfluencer/Addifluencers";
+import Addreview from "../components/admintestemonials/Addtestimonial";
+import Addifluencers from "../components/admininfluencer/Addifluencers";
 import Logout from "@/firebase/auth/logout";
-import Addresult from "../components/addresult/Addresult";
+import Addresult from "../components/adminresults/Addresult";
 
 export default function SideBar() {
 

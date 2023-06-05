@@ -1,4 +1,5 @@
 import React from 'react';
+import { AiOutlineUpload } from 'react-icons/ai';
 
 const InputComponent = ({
   id,
@@ -8,8 +9,13 @@ const InputComponent = ({
   placeholder,
   rows,
   textarea,
-  type
+  required,
+  type,
+  file
 }) => {
+
+
+
   if (textarea) {
     return (
       <div className="grid">
@@ -22,6 +28,7 @@ const InputComponent = ({
           className="border-2 my-2 grow border-gray-300 bg-white pl-2 rounded-lg text-xl focus:outline-none h-auto"
           value={value}
           onChange={onChange}
+          required={false}
           placeholder={placeholder}
         />
       </div>
@@ -39,10 +46,11 @@ const InputComponent = ({
           id={id}
           className="hidden"
           accept="image/*"
+          onChange={onChange}
         />
-        <AiOutlineUpload
-          size={30}
-        />
+        <label htmlFor={id} className="cursor-pointer">
+          <AiOutlineUpload size={30} />
+        </label>
       </div>
     );
   }
@@ -59,6 +67,7 @@ const InputComponent = ({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        required={false}
       />
     </div>
   );

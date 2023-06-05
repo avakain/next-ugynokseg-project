@@ -5,8 +5,8 @@ import { ModalContext } from '../../../context/ModalContext';
 import { RxCross1 } from 'react-icons/rx';
 import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../../../firebase/config';
-import { ref, uploadBytes } from 'firebase/storage';
-import { useState } from 'react';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useState, useEffect } from 'react';
 
 
 
@@ -14,15 +14,40 @@ export default function Modal({
   result,
   testimonial,
   influencer,
-  form,
-  setForm }) {
+}) {
+
+  const [forms, setForms] = useState({
+    influencer: {
+      name: '',
+      socialmedia: {
+        instagram: '',
+        tiktok: '',
+      },
+      imageLink: '',
+    },
+    testimonial: {
+      name: '',
+      content: '',
+    },
+    result: {
+      name: '',
+      duration: '',
+      subscribers: '',
+      likes: '',
+    },
+  });
+
 
   const { isOpen, setOpen } = useContext(ModalContext);
   const [imageUpload, setImageUpload] = useState(null);
 
+  useEffect(() => {
+    console.log(forms.influencer)
+  }, [forms]);
+
   function save() {
     if (result) {
-      addDoc(collection(db, 'results',), form)
+      addDoc(collection(db, 'results',), forms.result)
         .then(() => {
           setOpen(!isOpen);
         })
@@ -30,7 +55,7 @@ export default function Modal({
           console.error('Error adding document: ', error);
         });
     } else if (testimonial) {
-      addDoc(collection(db, 'testimonials'), form)
+      addDoc(collection(db, 'testimonials'), forms.testimonial)
         .then(() => {
           setOpen(!isOpen);
 
@@ -39,11 +64,10 @@ export default function Modal({
           console.error('Error adding document: ', error);
         });
     } else if (influencer) {
-
-      addDoc(collection(db, 'influencers'), form)
+      uploadImage()
+      addDoc(collection(db, 'influencers'), forms.influencer)
         .then(() => {
           setOpen(!isOpen);
-          uploadImage();
         })
         .catch((error) => {
           console.error('Error adding document: ', error);
@@ -51,17 +75,33 @@ export default function Modal({
     }
   }
 
-  const uploadImage = () => {
+
+  const uploadImage = async () => {
     if (imageUpload == null) return;
     else {
-      const storageRef = ref(storage, `influencers/${form.name.toLowerCase().replace(/\s+/g, '-')}`);
-      uploadBytes(storageRef, imageUpload).then(() => {
-        alert('Sikeres feltöltés!');
-      });
+      const storageRef = ref(storage, `influencers/${forms.influencer.name.toLowerCase().replace(/\s+/g, '-').replace(/(\W+)/g, '')}`);
+      try {
+        const snapshot = await uploadBytes(storageRef, imageUpload);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        setForms({
+          ...forms,
+          influencer: {
+            ...forms.influencer,
+            imageLink: downloadURL,
+          },
+        });
+        console.log(forms.influencer.imageLink);
+        alert('Sikeres feltöltés');
+      } catch (error) {
+        console.log('Error uploading image:', error);
+      }
     }
   }
 
+
   if (influencer) {
+
+
     return (
       <>
         {isOpen && (
@@ -73,80 +113,89 @@ export default function Modal({
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Név"
                     required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    value={forms.influencer.name}
+                    onChange={(e) =>
+                      setForms({
+                        ...forms,
+                        influencer: {
+                          ...forms.influencer,
+                          name: e.target.value,
+                        },
+                      })
+                    }
                   />
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Tiktok követők"
-                    value={form.socialmedia.tiktok}
-                    onChange={(e) => setForm({ ...form, socialmedia: { ...form.socialmedia, tiktok: e.target.value } })}
+                    value={forms.influencer.socialmedia.tiktok}
+                    onChange={(e) =>
+                      setForms({
+                        ...forms,
+                        influencer: {
+                          ...forms.influencer,
+                          socialmedia: {
+                            ...forms.influencer.socialmedia,
+                            tiktok: e.target.value,
+                          },
+                        },
+                      })
+                    }
                     type="number"
                   />
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Instagram követők"
-                    value={form.socialmedia.instagram}
-                    onChange={(e) => setForm({ ...form, socialmedia: { ...form.socialmedia, instagram: e.target.value } })}
+                    value={forms.influencer.socialmedia.instagram}
+                    onChange={(e) =>
+                      setForms({
+                        ...forms,
+                        influencer: {
+                          ...forms.influencer,
+                          socialmedia: {
+                            ...forms.influencer.socialmedia,
+                            instagram: e.target.value,
+                          },
+                        },
+                      })
+                    }
                     type="number"
                   />
-                  <div>
-                    <div className="grid ">
-                      <label htmlFor={`influencer${influencer.name}`} className="text-lg">
-                        {influencer.imageLink === '' ? 'Kép feltöltés' : 'Feltöltött kép:'}
-                      </label>
-                      <input
-                        required
-                        type="file"
-                        id={`influencer${influencer.name}`}
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => setImageUpload(e.target.files[0])}
-                      />
-                      <label htmlFor={`influencer${influencer.name}`} className="cursor-pointer">
-                        {influencer.imageLink === '' ? <AiOutlineUpload size={30} /> : ''}
-                        <div className="flex">
-                          <div className="mr-5">
-                            <p className="text-lg italic">{influencer.imageLink ? extractFileNameFromURL(influencer.imageLink) : ''}</p>
-                          </div>
-                          <div className="mt-1
-                          ">
-                            <RxCross1
-                              className="text-red-500" size={20} />
-                          </div>
-                        </div>
-                      </label>
-
-                    </div>
-                  </div>
+                  <InputComponent
+                    id={Math.floor(Math.random() * 10000) + 1}
+                    label="Kép feltöltés"
+                    onChange={(e) => {
+                      setImageUpload(e.target.files[0]);
+                    }}
+                    file
+                  />
                 </form>
               </div>
               <div className="flex justify-end mt-5 my-1">
-                <div
-                  onClick={() => {
-                    save();
-                    uploadImage();
-                  }}
-                >
+                <div >
                   <IoIosSave
                     size={25}
                     style={{ cursor: 'pointer' }}
                     className="mr-5"
-                    onClick={() => uploadImage()}
+                    onClick={
+                      () => {
+                        save()
+                      }
+                    }
                   />
-
                 </div>
                 <div>
                   <RxCross1
                     size={25}
                     onClick={() => {
-                      setForm({
-                        ...form,
-                        image: '',
-                        name: '',
-                        socialmedia: {
-                          instagram: '',
-                          tiktok: '',
+                      setForms({
+                        ...forms,
+                        influencer: {
+                          name: '',
+                          socialmedia: {
+                            instagram: '',
+                            tiktok: '',
+                          },
+                          imageLink: '',
                         },
                       });
                       setOpen(!isOpen);
@@ -160,42 +209,73 @@ export default function Modal({
         )}
       </>
     );
-  }
-  else if (result) {
+  } else if (result) {
     return (
       <>
         {isOpen && (
           <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-60 flex justify-center items-center">
             <div className="rounded-md max-w-500 w-90% shadow-lg relative bg-white p-12">
               <div className="grid">
-                <form >
+                <form>
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Név"
                     required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    value={forms.result.name}
+                    onChange={(e) =>
+                      setForms({
+                        ...forms,
+                        result: {
+                          ...forms.result,
+                          name: e.target.value,
+                        },
+                      })
+                    }
                   />
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Kampány hossza (hónap)"
-                    value={form.duration}
-                    onChange={(e) => setForm({ ...form, duration: e.target.value })}
-                    type={'number'}
+                    value={forms.result.duration}
+                    onChange={(e) =>
+                      setForms({
+                        ...forms,
+                        result: {
+                          ...forms.result,
+                          duration: e.target.value,
+                        },
+                      })
+                    }
+                    type="number"
                   />
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Feliratkozók"
-                    value={form.subscribers}
-                    onChange={(e) => setForm({ ...form, subscribers: e.target.value })}
-                    type={'number'}
+                    value={forms.result.subscribers}
+                    onChange={(e) =>
+                      setForms({
+                        ...forms,
+                        result: {
+                          ...forms.result,
+                          subscribers: e.target.value,
+                        },
+                      })
+                    }
+                    type="number"
                   />
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Nézettség"
-                    value={form.views}
-                    onChange={(e) => setForm({ ...form, views: e.target.value })}
-                    type={'number'}
+                    value={forms.result.views}
+                    onChange={(e) =>
+                      setForms({
+                        ...forms,
+                        result: {
+                          ...forms.result,
+                          views: e.target.value,
+                        },
+                      })
+                    }
+                    type="number"
                   />
                 </form>
               </div>
@@ -210,19 +290,22 @@ export default function Modal({
                   <IoIosSave
                     size={25}
                     style={{ cursor: 'pointer' }}
-                    className="mr-5" />
+                    className="mr-5"
+                  />
                 </div>
                 <div>
                   <RxCross1
                     size={25}
                     onClick={() => {
-                      setForm({
-                        ...form,
-                        name: '',
-                        duration: '',
-                        subscribers: '',
-                        views: ''
-                      })
+                      setForms({
+                        ...forms,
+                        result: {
+                          duration: '',
+                          name: '',
+                          subscribers: '',
+                          views: '',
+                        },
+                      });
                       setOpen(!isOpen);
                     }}
                     style={{ cursor: 'pointer' }}
@@ -230,13 +313,11 @@ export default function Modal({
                 </div>
               </div>
             </div>
-          </div >
-        )
-        }
+          </div>
+        )}
       </>
     );
-  }
-  else if (testimonial) {
+  } else if (testimonial) {
     return (
       <>
         {isOpen && (
@@ -248,15 +329,31 @@ export default function Modal({
                     required
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Név"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    value={forms.testimonial.name}
+                    onChange={(e) =>
+                      setForms({
+                        ...forms,
+                        testimonial: {
+                          ...forms.testimonial,
+                          name: e.target.value,
+                        },
+                      })
+                    }
                     placeholder="Enter Name"
                   />
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Tartalom"
-                    value={form.content}
-                    onChange={(e) => setForm({ ...form, content: e.target.value })}
+                    value={forms.testimonial.description}
+                    onChange={(e) =>
+                      setForms({
+                        ...forms,
+                        testimonial: {
+                          ...forms.testimonial,
+                          description: e.target.value,
+                        },
+                      })
+                    }
                     textarea
                     rows={7}
                   />
@@ -265,13 +362,14 @@ export default function Modal({
               <div className="flex justify-end mt-5 my-1">
                 <div
                   onClick={() => {
-                    save()
+                    save();
                   }}
                 >
                   <IoIosSave
                     size={25}
                     style={{ cursor: 'pointer' }}
-                    className="mr-5" />
+                    className="mr-5"
+                  />
                 </div>
                 <div
                   onClick={() => {
@@ -282,11 +380,13 @@ export default function Modal({
                   <RxCross1
                     onClick={() => {
                       setOpen(!isOpen);
-                      setForm({
-                        ...form,
-                        name: '',
-                        content: ''
-                      })
+                      setForms({
+                        ...forms,
+                        testimonial: {
+                          name: '',
+                          description: '',
+                        },
+                      });
                     }}
                     size={25}
                     style={{ cursor: 'pointer' }}
@@ -299,4 +399,4 @@ export default function Modal({
       </>
     );
   }
-}
+};  

@@ -10,12 +10,11 @@ import { ModalContext } from '../../../context/ModalContext';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
 import { db } from "@/firebase/config";
 
-
 export default function Addresult() {
   const [results, setResults] = useState([]);
   const [edit, setEdit] = useState(false);
   const { isOpen, setOpen } = useContext(ModalContext)
-  const [updateFlag, setUpdateFlag] = useState(false);
+  const [reRender, setReRender] = useState(false);
   const [form, setForm] = useState({
     duration: '',
     name: '',
@@ -33,7 +32,7 @@ export default function Addresult() {
       }
     };
     fetchData();
-  }, [updateFlag]);
+  }, [reRender]);
 
   const handleEdit = (index) => {
     setEdit(index);
@@ -55,15 +54,14 @@ export default function Addresult() {
       subscribers: form.subscribers,
       views: form.views,
     });
-    setUpdateFlag(!updateFlag);
+    setReRender(!reRender);
   }
-
 
   const handleDelete = async (index) => {
     const documentId = results[index].id;
     const documentRef = doc(db, "results", documentId);
     await deleteDoc(documentRef);
-    setUpdateFlag(!updateFlag);
+    setReRender(!reRender);
   };
 
   const handleModal = () => {
@@ -78,7 +76,10 @@ export default function Addresult() {
           className="flex flex-col"
           onClick={() => handleModal()}
         >
-          <MdOutlineLibraryAdd size={30} /></div>
+          <MdOutlineLibraryAdd
+            size={30}
+            className="cursor-pointer"
+          /></div>
       </div>
       <div>
         {isOpen &&
@@ -90,7 +91,7 @@ export default function Addresult() {
           />}
         {results.map((result, index) => (
           <div
-            key={result.name}
+            key={result.id}
 
             className={`flex ${edit !== index ? 'xs:flex-row border-gray-200 ' : 'xs:flex-col border-red-400 bg-gray-100'} justify-between border-2 font-light  border-gray-200
             p-3 rounded-lg my-2`}
@@ -102,6 +103,7 @@ export default function Addresult() {
                     <InputComponent
                       id={form.name}
                       label="Név"
+                      req
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                     />
@@ -147,7 +149,6 @@ export default function Addresult() {
                     className="mr-3"
                     style={{ cursor: 'pointer' }}
                   />
-
                 ) : (
                   <BsPencil
                     className="mr-3"
@@ -159,8 +160,6 @@ export default function Addresult() {
                 <BsFillTrash3Fill
                   onClick={() => handleDelete(index)}
                   style={{ cursor: 'pointer' }}
-
-
                 />
               </div>
             </div>

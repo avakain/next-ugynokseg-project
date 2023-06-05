@@ -7,23 +7,26 @@ import { MdOutlineLibraryAdd } from 'react-icons/md';
 import Modal from "../modal/Modal";
 import { useContext } from 'react';
 import { ModalContext } from '../../../context/ModalContext';
-import { collection, doc, setDoc, deleteDoc } from 'firebase/firestore';
-import { db } from "@/firebase/config";
+import { doc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { storage, db } from "@/firebase/config";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { RxCross1 } from 'react-icons/rx';
+import { AiOutlineUpload } from 'react-icons/ai';
 
 export default function AddInfluencers() {
   const [influencers, setInfluencers] = useState([]);
   const [edit, setEdit] = useState(false);
   const { isOpen, setOpen } = useContext(ModalContext)
-  const [updateFlag, setUpdateFlag] = useState(false);
+  const [reRender, setReRender] = useState(false);
+  const [imageUpload, setImageUpload] = useState(null);
   const [form, setForm] = useState({
-    image: '',
     name: '',
     socialmedia: {
       instagram: '',
       tiktok: '',
     },
+    imageLink: '',
   });
-
 
   useEffect(() => {
     const fetchInfluencers = async () => {
@@ -39,7 +42,7 @@ export default function AddInfluencers() {
       }
     };
     fetchInfluencers();
-  }, [updateFlag]);
+  }, [reRender]);
 
   const handleEdit = (index) => {
     setEdit(index);
@@ -49,10 +52,10 @@ export default function AddInfluencers() {
         tiktok: influencers[index].socialmedia.tiktok,
         instagram: influencers[index].socialmedia.instagram,
       },
+      imageLink: influencers[index].imageLink,
     });
   };
-
-
+  console.log(form.imageLink)
   const handleSave = async (index) => {
     setEdit(false);
     const documentId = influencers[index].id;
@@ -63,19 +66,52 @@ export default function AddInfluencers() {
         tiktok: form.socialmedia.tiktok,
         instagram: form.socialmedia.instagram,
       },
-    });
-    setUpdateFlag(!updateFlag);
+    }
+    );
+    imageUpload && await uploadImage(index);
+    setReRender(!reRender);
   }
 
   const handleDelete = async (index) => {
     const documentId = influencers[index].id;
     const documentRef = doc(db, "influencers", documentId);
     await deleteDoc(documentRef);
+    setReRender(!reRender);
   };
+
+  function extractFileNameFromURL(url) {
+    const startIndex = url.lastIndexOf('%') + 3;
+    const endIndex = url.lastIndexOf('?');
+    const fileName = url.substring(startIndex, endIndex);
+    return fileName;
+  }
 
   const handleModal = () => {
     setOpen(!isOpen);
   };
+
+
+
+  const uploadImage = async (index) => {
+    if (imageUpload == null) return;
+    else {
+      const storageRef = ref(storage, `influencers/${form.name.toLowerCase().replace(/\s+/g, '-').replace(/(\W+)/g, '')}`);
+      try {
+        const snapshot = await uploadBytes(storageRef, imageUpload);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        console.log('File available at', downloadURL);
+        const documentId = influencers[index].id;
+        console.log(documentId);
+        const documentRef = doc(db, "influencers", documentId);
+        await updateDoc(documentRef, {
+          imageLink: downloadURL,
+        });
+        alert('Sikeres feltöltés');
+      } catch (error) {
+        console.log('Error uploading image:', error);
+      }
+    }
+  }
 
   return (
     <div className="xs:m-4 md:y-4">
@@ -84,7 +120,10 @@ export default function AddInfluencers() {
           <p>Influencer kezelő</p>
         </div>
         <div className="flex flex-col" onClick={handleModal}>
-          <MdOutlineLibraryAdd size={30} />
+          <MdOutlineLibraryAdd
+            size={30}
+            style={{ cursor: 'pointer' }}
+          />
         </div>
       </div>
       <div>
@@ -98,14 +137,16 @@ export default function AddInfluencers() {
         )}
         {influencers?.map((influencer, index) => (
           <div
-            key={influencer.name}
+            key={influencer.id}
             className={`flex ${edit !== index ? 'xs:flex-row border-gray-200' : 'xs:flex-col border-red-400 bg-gray-100'
               } justify-between border-2 font-light border-gray-200 p-3 rounded-lg my-2`}
           >
-            <div className="sm:grid">
+            <div
+              className="sm:grid">
               {edit === index ? (
                 <div className="grid">
                   <InputComponent
+                    required
                     id={influencer.name}
                     label="Név"
                     value={form.name}
@@ -129,13 +170,38 @@ export default function AddInfluencers() {
                     }
                     type="number"
                   />
-                  <InputComponent
-                    id={`influencer${influencer.name}`}
-                    label="Kép feltöltés"
-                    value={form.image}
-                    onChange={(e) => setForm({ ...form, image: e.target.value })}
-                    type="text"
-                  />
+                  <div>
+                    <div className="grid ">
+                      <label htmlFor={`influencer${influencer.name}`} className="text-lg">
+                        {influencer.imageLink === '' ? 'Kép feltöltés' : 'Feltöltött kép:'}
+                      </label>
+                      <input
+                        required
+                        type="file"
+                        id={`influencer${influencer.name}`}
+                        className="hidden"
+                        accept="image/*"
+                        onChange={(e) => setImageUpload(e.target.files[0])}
+                      />
+                      <label htmlFor={`influencer${influencer.name}`} className="cursor-pointer">
+                        {influencer.imageLink === '' ?
+                          <AiOutlineUpload
+                            size={30}
+                          /> :
+                          <div className="flex">
+                            <div className="mr-5">
+                              {extractFileNameFromURL(influencer.imageLink)}
+
+                            </div>
+                            <div >
+                              <RxCross1 />
+                            </div>
+                          </div>
+                        }
+                      </label>
+
+                    </div>
+                  </div>
                 </div>
               ) : (
                 influencer.name
@@ -158,7 +224,9 @@ export default function AddInfluencers() {
                 )}
               </div>
               <div>
-                <BsFillTrash3Fill style={{ cursor: 'pointer' }} onClick={() => handleDelete(index)} />
+                <BsFillTrash3Fill
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => handleDelete(index)} />
               </div>
             </div>
           </div>
