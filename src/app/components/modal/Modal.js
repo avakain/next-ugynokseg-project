@@ -7,8 +7,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../../../firebase/config';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useState, useEffect } from 'react';
-
-
+import Alertspopup from '../alert/Alertspopup';
 
 export default function Modal({
   result,
@@ -37,44 +36,32 @@ export default function Modal({
     },
   });
 
-
   const { isOpen, setOpen } = useContext(ModalContext);
   const [imageUpload, setImageUpload] = useState(null);
 
-  useEffect(() => {
-    console.log(forms.influencer)
-  }, [forms]);
 
   function save() {
     if (result) {
-      addDoc(collection(db, 'results',), forms.result)
-        .then(() => {
-          setOpen(!isOpen);
-        })
-        .catch((error) => {
-          console.error('Error adding document: ', error);
-        });
+      addDoc(collection(db, 'results',), forms.result).then(() => { setOpen(!isOpen); })
+
+        .catch((error) => { console.error('Error adding document: ', error); });
+
+
     } else if (testimonial) {
       addDoc(collection(db, 'testimonials'), forms.testimonial)
-        .then(() => {
-          setOpen(!isOpen);
-
-        })
-        .catch((error) => {
-          console.error('Error adding document: ', error);
-        });
-    } else if (influencer) {
-      uploadImage()
-      addDoc(collection(db, 'influencers'), forms.influencer)
-        .then(() => {
-          setOpen(!isOpen);
-        })
-        .catch((error) => {
-          console.error('Error adding document: ', error);
-        });
+        .then(() => { setOpen(!isOpen); })
+        .catch((error) => { console.error('Error adding document: ', error); });
     }
+    else if (influencer) { uploadImage() }
   }
-
+  useEffect(() => {
+    if (forms.influencer.imageLink) {
+      addDoc(collection(db, 'influencers'),
+        forms.influencer)
+        .then(() => { setOpen((prevState) => !prevState); })
+        .catch((error) => { console.error('Error adding document: ', error); });
+    }
+  }, [forms.influencer.imageLink])
 
   const uploadImage = async () => {
     if (imageUpload == null) return;
@@ -83,15 +70,16 @@ export default function Modal({
       try {
         const snapshot = await uploadBytes(storageRef, imageUpload);
         const downloadURL = await getDownloadURL(snapshot.ref);
+        console.log('File available at', downloadURL);
+        setForms((prevState) => (
+          {
+            ...prevState,
+            influencer: {
+              ...prevState.influencer,
+              imageLink: downloadURL
+            }
+          }))
 
-        setForms({
-          ...forms,
-          influencer: {
-            ...forms.influencer,
-            imageLink: downloadURL,
-          },
-        });
-        console.log(forms.influencer.imageLink);
         alert('Sikeres feltöltés');
       } catch (error) {
         console.log('Error uploading image:', error);
@@ -101,8 +89,6 @@ export default function Modal({
 
 
   if (influencer) {
-
-
     return (
       <>
         {isOpen && (
@@ -116,13 +102,13 @@ export default function Modal({
                     required
                     value={forms.influencer.name}
                     onChange={(e) =>
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
                         influencer: {
-                          ...forms.influencer,
+                          ...prevState.influencer,
                           name: e.target.value,
                         },
-                      })
+                      }))
                     }
                   />
                   <InputComponent
@@ -130,16 +116,16 @@ export default function Modal({
                     label="Tiktok követők"
                     value={forms.influencer.socialmedia.tiktok}
                     onChange={(e) =>
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
                         influencer: {
-                          ...forms.influencer,
+                          ...prevState.influencer,
                           socialmedia: {
-                            ...forms.influencer.socialmedia,
+                            ...prevState.influencer.socialmedia,
                             tiktok: e.target.value,
                           },
                         },
-                      })
+                      }))
                     }
                     type="number"
                   />
@@ -148,16 +134,16 @@ export default function Modal({
                     label="Instagram követők"
                     value={forms.influencer.socialmedia.instagram}
                     onChange={(e) =>
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
                         influencer: {
-                          ...forms.influencer,
+                          ...prevState.influencer,
                           socialmedia: {
-                            ...forms.influencer.socialmedia,
+                            ...prevState.influencer.socialmedia,
                             instagram: e.target.value,
                           },
                         },
-                      })
+                      }))
                     }
                     type="number"
                   />
@@ -199,7 +185,7 @@ export default function Modal({
                           imageLink: '',
                         },
                       });
-                      setOpen(!isOpen);
+                      setOpen((prevState) => !prevState);
                     }}
                     style={{ cursor: 'pointer' }}
                   />
@@ -208,6 +194,8 @@ export default function Modal({
             </div>
           </div>
         )}
+
+
       </>
     );
   } else if (result) {
@@ -224,27 +212,29 @@ export default function Modal({
                     required
                     value={forms.result.name}
                     onChange={(e) =>
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
                         result: {
-                          ...forms.result,
+                          ...prevState.result,
                           name: e.target.value,
                         },
-                      })
+                      }))
                     }
+
                   />
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Kampány hossza (hónap)"
                     value={forms.result.duration}
                     onChange={(e) =>
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
+
                         result: {
-                          ...forms.result,
+                          ...prevState.result,
                           duration: e.target.value,
                         },
-                      })
+                      }))
                     }
                     type="number"
                   />
@@ -253,13 +243,14 @@ export default function Modal({
                     label="Feliratkozók"
                     value={forms.result.subscribers}
                     onChange={(e) =>
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
                         result: {
-                          ...forms.result,
+                          ...prevState.result,
                           subscribers: e.target.value,
                         },
-                      })
+                      }))
+
                     }
                     type="number"
                   />
@@ -268,13 +259,13 @@ export default function Modal({
                     label="Nézettség"
                     value={forms.result.views}
                     onChange={(e) =>
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
                         result: {
                           ...forms.result,
                           views: e.target.value,
                         },
-                      })
+                      }))
                     }
                     type="number"
                   />
@@ -284,7 +275,7 @@ export default function Modal({
               <div className="flex justify-end mt-5 my-1">
                 <div
                   onClick={() => {
-                    setOpen(!isOpen);
+                    setOpen((prevState) => !prevState);
                     save();
                   }}
                 >
@@ -298,16 +289,16 @@ export default function Modal({
                   <RxCross1
                     size={25}
                     onClick={() => {
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
                         result: {
                           duration: '',
                           name: '',
                           subscribers: '',
                           views: '',
                         },
-                      });
-                      setOpen(!isOpen);
+                      }));
+                      setOpen((prevState) => !prevState);
                     }}
                     style={{ cursor: 'pointer' }}
                   />
@@ -316,6 +307,7 @@ export default function Modal({
             </div>
           </div>
         )}
+
       </>
     );
   } else if (testimonial) {
@@ -332,28 +324,29 @@ export default function Modal({
                     label="Név"
                     value={forms.testimonial.name}
                     onChange={(e) =>
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
                         testimonial: {
-                          ...forms.testimonial,
+                          ...prevState.testimonial,
                           name: e.target.value,
                         },
-                      })
+                      }))
                     }
                     placeholder="Enter Name"
                   />
+
                   <InputComponent
                     id={Math.floor(Math.random() * 10000) + 1}
                     label="Tartalom"
-                    value={forms.testimonial.description}
+                    value={forms.testimonial.content}
                     onChange={(e) =>
-                      setForms({
-                        ...forms,
+                      setForms((prevState) => ({
+                        ...prevState,
                         testimonial: {
-                          ...forms.testimonial,
-                          description: e.target.value,
+                          ...prevState.testimonial,
+                          content: e.target.value,
                         },
-                      })
+                      }))
                     }
                     textarea
                     rows={7}
@@ -374,20 +367,20 @@ export default function Modal({
                 </div>
                 <div
                   onClick={() => {
-                    setOpen(!isOpen);
+                    setOpen((prevState) => !prevState);
                     console.log('delete');
                   }}
                 >
                   <RxCross1
                     onClick={() => {
-                      setOpen(!isOpen);
-                      setForms({
-                        ...forms,
+                      setOpen(prevState => !prevState);
+                      setForms((prevState) => ({
+                        ...prevState,
                         testimonial: {
                           name: '',
                           description: '',
                         },
-                      });
+                      }));
                     }}
                     size={25}
                     style={{ cursor: 'pointer' }}
@@ -397,6 +390,7 @@ export default function Modal({
             </div>
           </div>
         )}
+
       </>
     );
   }
