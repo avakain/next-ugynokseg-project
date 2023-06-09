@@ -1,3 +1,5 @@
+
+"use client"
 import dynamic from 'next/dynamic'
 import useHideContext from '../hooks/use-hidenavfooter'
 import { useEffect } from 'react'

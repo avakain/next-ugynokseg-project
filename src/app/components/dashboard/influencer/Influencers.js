@@ -1,32 +1,32 @@
-import getDoument from "@/firebase/firestore/getData";
 import { useState, useEffect } from 'react';
+import getDoument from "@/firebase/firestore/getData";
+import useAdminContext from '@/app/hooks/use-admin-context';
+import { doc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { db } from "@/firebase/config";
+import InputComponent from "../../input/Inputcomponent";
+import Addinfluencermodal from "./Addinfluencermodal";
 import { BsPencil, BsFillTrash3Fill } from 'react-icons/bs';
 import { IoIosSave } from 'react-icons/io';
-import InputComponent from "../input/Inputcomponent";
 import { MdOutlineLibraryAdd } from 'react-icons/md';
-import Modal from "../modal/Modal";
-import { useContext } from 'react';
-import { ModalContext } from '../../../context/ModalContext';
-import { doc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
-import { storage, db } from "@/firebase/config";
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { RxCross1 } from 'react-icons/rx';
+import { TfiExchangeVertical } from 'react-icons/tfi';
 import { AiOutlineUpload } from 'react-icons/ai';
+import { Changa } from 'next/font/google';
+
 
 export default function AddInfluencers() {
+  const { isOpen, setOpen, iSimageUpload, setIsImageUpload, uploadImage, extractFileNameFromURL, handleDeleteItem } = useAdminContext();
   const [influencers, setInfluencers] = useState([]);
   const [edit, setEdit] = useState(false);
-  const { isOpen, setOpen } = useContext(ModalContext)
-  const [reRender, setReRender] = useState(false);
-  const [imageUpload, setImageUpload] = useState(null);
+  const [onChange, setOnChange] = useState(false);
   const [form, setForm] = useState({
     name: '',
     socialmedia: {
-      instagram: '',
       tiktok: '',
+      instagram: '',
     },
     imageLink: '',
   });
+
 
   useEffect(() => {
     const fetchInfluencers = async () => {
@@ -42,22 +42,31 @@ export default function AddInfluencers() {
       }
     };
     fetchInfluencers();
-  }, [reRender]);
+  }, [isOpen, onChange]);
+
+
+  useEffect(() => {
+
+    if (form.imageLink) {
+      console.log(form.imageLink);
+    }
+  }, [form.imageLink]);
 
   const handleEdit = (index) => {
     setEdit(index);
-    setForm({
+    setForm((prevState) => ({
+      ...prevState,
       name: influencers[index].name,
       socialmedia: {
         tiktok: influencers[index].socialmedia.tiktok,
         instagram: influencers[index].socialmedia.instagram,
       },
       imageLink: influencers[index].imageLink,
-    });
+    }));
   };
-  console.log(form.imageLink)
+
   const handleSave = async (index) => {
-    setEdit(false);
+    setEdit(null);
     const documentId = influencers[index].id;
     const documentRef = doc(db, "influencers", documentId);
     await setDoc(documentRef, {
@@ -68,50 +77,18 @@ export default function AddInfluencers() {
       },
     }
     );
-    imageUpload && await uploadImage(index);
-    setReRender(!reRender);
-  }
-
-  const handleDelete = async (index) => {
-    const documentId = influencers[index].id;
-    const documentRef = doc(db, "influencers", documentId);
-    await deleteDoc(documentRef);
-    setReRender(!reRender);
-  };
-
-  function extractFileNameFromURL(url) {
-    const startIndex = url.lastIndexOf('%') + 3;
-    const endIndex = url.lastIndexOf('?');
-    const fileName = url.substring(startIndex, endIndex);
-    return fileName;
+    iSimageUpload ? await uploadImage('influencers', form.name, documentRef) :
+      await updateDoc(documentRef, {
+        imageLink: form.imageLink,
+      });
+    setOpen(false);
+    setOnChange(!onChange);
   }
 
   const handleModal = () => {
-    setOpen(!isOpen);
+    setOpen(true);
   };
 
-
-
-  const uploadImage = async (index) => {
-    if (imageUpload == null) return;
-    else {
-      const storageRef = ref(storage, `influencers/${form.name.toLowerCase().replace(/\s+/g, '-').replace(/(\W+)/g, '')}`);
-      try {
-        const snapshot = await uploadBytes(storageRef, imageUpload);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-        console.log('File available at', downloadURL);
-        const documentId = influencers[index].id;
-        console.log(documentId);
-        const documentRef = doc(db, "influencers", documentId);
-        await updateDoc(documentRef, {
-          imageLink: downloadURL,
-        });
-        alert('Sikeres feltöltés');
-      } catch (error) {
-        console.log('Error uploading image:', error);
-      }
-    }
-  }
 
   return (
     <div className="xs:m-4 md:y-4">
@@ -128,7 +105,7 @@ export default function AddInfluencers() {
       </div>
       <div>
         {isOpen && (
-          <Modal
+          <Addinfluencermodal
             influencer
             isOpen={isOpen}
             form={form}
@@ -136,6 +113,7 @@ export default function AddInfluencers() {
           />
         )}
         {influencers?.map((influencer, index) => (
+
           <div
             key={influencer.id}
             className={`flex ${edit !== index ? 'xs:flex-row border-gray-200' : 'xs:flex-col border-red-400 bg-gray-100'
@@ -172,32 +150,27 @@ export default function AddInfluencers() {
                   />
                   <div>
                     <div className="grid ">
-                      <label htmlFor={`influencer${influencer.name}`} className="text-lg">
+                      <label htmlFor={`influencer${influencer.name} `} className="text-lg">
                         {influencer.imageLink === '' ? 'Kép feltöltés' : 'Feltöltött kép:'}
                       </label>
                       <input
                         required
                         type="file"
-                        id={`influencer${influencer.name}`}
+                        id={`influencer${influencer.name} `}
                         className="hidden"
                         accept="image/*"
-                        onChange={(e) => setImageUpload(e.target.files[0])}
+                        onChange={(e) => setIsImageUpload(e.target.files[0])}
                       />
-                      <label htmlFor={`influencer${influencer.name}`} className="cursor-pointer">
-                        {influencer.imageLink === '' ?
-                          <AiOutlineUpload
-                            size={30}
-                          /> :
-                          <div className="flex">
-                            <div className="mr-5">
-                              {extractFileNameFromURL(influencer.imageLink)}
-
-                            </div>
-                            <div >
-                              <RxCross1 />
-                            </div>
+                      <label htmlFor={`influencer${influencer.name} `} className="cursor-pointer">
+                        {influencer.imageLink === '' ? <AiOutlineUpload size={30} /> : ''}
+                        <div className="flex">
+                          <div className="mr-5">
+                            {extractFileNameFromURL(influencer.imageLink)}
                           </div>
-                        }
+                          <div >
+                            <TfiExchangeVertical />
+                          </div>
+                        </div>
                       </label>
 
                     </div>
@@ -212,6 +185,15 @@ export default function AddInfluencers() {
                 onClick={() => {
                   if (edit === index) {
                     handleSave(index);
+                    setForm({
+                      name: '',
+                      socialmedia: {
+                        tiktok: '',
+                        instagram: '',
+                      },
+                      imageLink: '',
+                    });
+
                   } else {
                     handleEdit(index);
                   }
@@ -226,7 +208,10 @@ export default function AddInfluencers() {
               <div>
                 <BsFillTrash3Fill
                   style={{ cursor: 'pointer' }}
-                  onClick={() => handleDelete(index)} />
+                  onClick={() => {
+                    handleDeleteItem('influencers', influencer);
+                    setOnChange(!onChange);
+                  }} />
               </div>
             </div>
           </div>

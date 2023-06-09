@@ -9,7 +9,7 @@ const InputComponent = ({
   placeholder,
   rows,
   textarea,
-  required,
+
   type,
   file
 }) => {

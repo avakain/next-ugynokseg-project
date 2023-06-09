@@ -1,21 +1,21 @@
 import getDoument from "@/firebase/firestore/getData";
 import { useState, useEffect } from 'react';
+import { db } from "@/firebase/config";
+import { doc, setDoc } from "firebase/firestore";
+import useAdminContext from "@/app/hooks/use-admin-context";
+import InputComponent from "../../input/Inputcomponent";
+import Addtestimonialmodal from "./Addtestemonialmodal";
 import { BsPencil, BsFillTrash3Fill } from 'react-icons/bs';
 import { IoIosSave } from 'react-icons/io';
-import InputComponent from "../input/Inputcomponent";
 import { MdOutlineLibraryAdd } from 'react-icons/md';
-import Modal from "../modal/Modal";
-import { useContext } from 'react';
-import { ModalContext } from '../../../context/ModalContext';
-import { doc, deleteDoc, setDoc } from "firebase/firestore";
-import { db, storage } from "@/firebase/config";
 
-
-export default function Addresult() {
+export default function Admintestimonial() {
+  const { isOpen, setOpen, handleDeleteItem, } = useAdminContext();
   const [testimonials, setTestimonials] = useState([]);
   const [edit, setEdit] = useState(false);
-  const { isOpen, setOpen } = useContext(ModalContext);
-  const [reRender, setReRender] = useState(false);
+  const [onChange, setOnChange] = useState(false);
+
+
   const [form, setForm] = useState({
     name: '',
     content: '',
@@ -31,14 +31,15 @@ export default function Addresult() {
       }
     };
     fetchData();
-  }, [reRender]);
+  }, [isOpen, onChange]);
 
   const handleEdit = (index) => {
     setEdit(index);
-    setForm({
+    setForm((prevState) => ({
+      ...prevState,
       name: testimonials[index].name,
       content: testimonials[index].content,
-    });
+    }));
   };
 
   const handleSave = async (index) => {
@@ -49,18 +50,11 @@ export default function Addresult() {
       name: form.name,
       content: form.content,
     });
-    setReRender(!reRender);
+    setOpen(false);
   }
 
-  const handleDelete = async (index) => {
-    const documentId = testimonials[index].id;
-    const documentRef = doc(db, "testimonials", documentId);
-    await deleteDoc(documentRef);
-    setReRender(!reRender);
-  };
-
   const handleModal = () => {
-    setOpen(!isOpen);
+    setOpen(true);
   };
 
   return (
@@ -79,11 +73,7 @@ export default function Addresult() {
       </div>
       <div>
         {isOpen && (
-          <Modal
-            testimonial
-            isOpen={isOpen}
-            form={form}
-            setForm={setForm}
+          <Addtestimonialmodal
           />
         )}
         {testimonials.map((testimonial, index) => (
@@ -120,6 +110,7 @@ export default function Addresult() {
                 onClick={() => {
                   if (edit === index) {
                     handleSave(index);
+                    setOnChange(!onChange);
                   } else {
                     handleEdit(index);
                   }
@@ -134,7 +125,10 @@ export default function Addresult() {
               <div>
                 <BsFillTrash3Fill
                   style={{ cursor: 'pointer' }}
-                  onClick={() => handleDelete(index)}
+                  onClick={() => {
+                    handleDeleteItem('testimonials', testimonial);
+                    setOnChange(!onChange);
+                  }}
                 />
               </div>
             </div>

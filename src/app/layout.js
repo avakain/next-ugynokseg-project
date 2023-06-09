@@ -5,32 +5,38 @@ import NavBar from './components/navbar/Navbar'
 import Footer from './components/footer/footer'
 import { AuthContextProvider } from '@/context/AuthContext'
 import { usePathname } from 'next/navigation'
-import { ModalProvider } from '@/context/ModalContext'
+import { Provider } from '@/context/AdminContext'
+
+
 const raleway = Raleway({
   subsets: ['latin'],
   weight: ['400', '700']
 })
+
+
 
 export const metadata = {
   title: 'Az ügynökség',
   description: 'Socialmedia szolgaltatasok',
 }
 
-//write me a function that hide nav and footer at different pages
-
 export default function RootLayout({ children }) {
   const pathname = usePathname();
 
+  const shouldHideNavAndFooter = pathname === '/login-admin' ||
+    pathname === '/admin' ||
+    pathname === '/admin/add-review' ||
+    pathname === '/admin/add-influencer';
 
   return (
     <html lang="en">
       <body className={raleway.className}>
         <AuthContextProvider>
-          <ModalProvider>
-            {pathname === '/login-admin' || pathname === '/admin' || pathname === '/admin/add-review' || pathname === '/admin/add-influencer' ? null : <NavBar />}
+          <Provider>
+            {!shouldHideNavAndFooter && <NavBar />}
             {children}
-            {pathname === '/login-admin' || pathname === '/admin' || pathname === '/admin/add-review' || pathname === '/admin/add-influencer' ? null : <Footer />}
-          </ModalProvider>
+            {!shouldHideNavAndFooter && <Footer />}
+          </Provider>
         </AuthContextProvider>
       </body>
     </html>
