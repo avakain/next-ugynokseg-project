@@ -10,7 +10,7 @@ import { IoIosSave } from 'react-icons/io';
 import { MdOutlineLibraryAdd } from 'react-icons/md';
 import { TfiExchangeVertical } from 'react-icons/tfi';
 import { AiOutlineUpload } from 'react-icons/ai';
-import { Changa } from 'next/font/google';
+import Alertdelete from "../../alert/Alertdelete";
 
 
 export default function AddInfluencers() {
@@ -18,6 +18,7 @@ export default function AddInfluencers() {
   const [influencers, setInfluencers] = useState([]);
   const [edit, setEdit] = useState(false);
   const [onChange, setOnChange] = useState(false);
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [form, setForm] = useState({
     name: '',
     socialmedia: {
@@ -42,7 +43,7 @@ export default function AddInfluencers() {
       }
     };
     fetchInfluencers();
-  }, [isOpen, onChange]);
+  }, [isOpen, onChange, openDeleteAlert]);
 
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function AddInfluencers() {
 
   const handleEdit = (index) => {
     setEdit(index);
+    console.log(influencers[index].imageLink);
     setForm((prevState) => ({
       ...prevState,
       name: influencers[index].name,
@@ -89,6 +91,12 @@ export default function AddInfluencers() {
     setOpen(true);
   };
 
+
+  useState(() => {
+    if (form.imageLink) {
+      console.log(form.imageLink);
+    }
+  }, [])
 
   return (
     <div className="xs:m-4 md:y-4">
@@ -162,17 +170,19 @@ export default function AddInfluencers() {
                         onChange={(e) => setIsImageUpload(e.target.files[0])}
                       />
                       <label htmlFor={`influencer${influencer.name} `} className="cursor-pointer">
-                        {influencer.imageLink === '' ? <AiOutlineUpload size={30} /> : ''}
-                        <div className="flex">
-                          <div className="mr-5">
-                            {extractFileNameFromURL(influencer.imageLink)}
+                        {influencer.imageLink === '' ?
+                          <AiOutlineUpload size={30} />
+                          :
+                          <div className="flex">
+                            <div className="mr-5">
+                              {extractFileNameFromURL(influencer.imageLink)}
+                            </div>
+                            <div>
+                              <TfiExchangeVertical />
+                            </div>
                           </div>
-                          <div >
-                            <TfiExchangeVertical />
-                          </div>
-                        </div>
+                        }
                       </label>
-
                     </div>
                   </div>
                 </div>
@@ -209,9 +219,17 @@ export default function AddInfluencers() {
                 <BsFillTrash3Fill
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
-                    handleDeleteItem('influencers', influencer);
-                    setOnChange(!onChange);
-                  }} />
+                    setOpenDeleteAlert(true);
+                  }}
+                />
+                {openDeleteAlert && (
+                  <Alertdelete
+                    handleDelete={() => handleDeleteItem('influencers', influencer)}
+                    setOpenDeleteAlert={() => setOpenDeleteAlert(false)}
+                    onChange={() => setOnChange(!onChange)}
+                  />
+                )
+                }
               </div>
             </div>
           </div>

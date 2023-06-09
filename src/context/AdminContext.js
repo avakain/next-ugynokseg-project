@@ -43,18 +43,18 @@ const Provider = ({ children }) => {
     const documentId = item.id;
     const documentRef = doc(db, itemName, documentId);
     await deleteDoc(documentRef);
+    setOpen(false);
   };
 
   const handleSave = async (item, form) => {
     try {
       const documentRef = await addDoc(collection(db, item), form);
       setOpen(false)
-      if (iSimageUpload) {
+      if (iSimageUpload && item !== 'testimonials') {
         const documentId = documentRef.id;
         const collectionRef = collection(db, item);
         const documentRefToUpdate = doc(collectionRef, documentId);
         await uploadImage(item, form.name, documentRefToUpdate);
-        setIsImageUpload(null);
       }
     } catch (error) {
       console.error('Error adding document: ', error);

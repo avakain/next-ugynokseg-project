@@ -8,14 +8,14 @@ import Addtestimonialmodal from "./Addtestemonialmodal";
 import { BsPencil, BsFillTrash3Fill } from 'react-icons/bs';
 import { IoIosSave } from 'react-icons/io';
 import { MdOutlineLibraryAdd } from 'react-icons/md';
+import Alertdelete from "../../alert/Alertdelete";
 
 export default function Admintestimonial() {
   const { isOpen, setOpen, handleDeleteItem, } = useAdminContext();
   const [testimonials, setTestimonials] = useState([]);
   const [edit, setEdit] = useState(false);
   const [onChange, setOnChange] = useState(false);
-
-
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [form, setForm] = useState({
     name: '',
     content: '',
@@ -31,7 +31,7 @@ export default function Admintestimonial() {
       }
     };
     fetchData();
-  }, [isOpen, onChange]);
+  }, [isOpen, onChange, openDeleteAlert]);
 
   const handleEdit = (index) => {
     setEdit(index);
@@ -126,10 +126,17 @@ export default function Admintestimonial() {
                 <BsFillTrash3Fill
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
-                    handleDeleteItem('testimonials', testimonial);
-                    setOnChange(!onChange);
+                    setOpenDeleteAlert(true);
                   }}
                 />
+                {openDeleteAlert && (
+                  <Alertdelete
+                    handleDelete={() => handleDeleteItem('testimonials', testimonial)}
+                    setOpenDeleteAlert={() => setOpenDeleteAlert(false)}
+                    onChange={() => setOnChange(!onChange)}
+                  />
+                )
+                }
               </div>
             </div>
           </div>
