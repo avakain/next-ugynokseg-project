@@ -23,13 +23,19 @@ export default function InfluencerItem({ name, social, src }) {
     <div className="max-w-sm m-auto mt-16 rounded-xl overflow-hidden shadow-lg ">
 
 
+
+
       <div className='border-b-2 border-gray-100 pb-2'>
-        <Image
-          src={`${src}`}
-          alt={name}
-          width={500}
-          height={300}
-          className='mb-2 w-max text-xl' />
+        <div className="image-container">
+          <Image
+            src={`${src}`}
+            alt={name}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+            className='mb-2 w-max text-xl'
+          />
+        </div>
         <div className="font-medium text-left text-gray-darker ml-6">{name}</div>
       </div>
 

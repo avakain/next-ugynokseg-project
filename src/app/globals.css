@@ -21,3 +21,18 @@ body {
   margin: auto;
   max-width: 1500px;
 }
+
+.image-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  /* This creates a 1:1 aspect ratio */
+}
+
+.image-container>div {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}

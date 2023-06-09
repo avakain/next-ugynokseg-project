@@ -177,7 +177,7 @@ export default function AddInfluencers() {
                             <div className="mr-5">
                               {extractFileNameFromURL(influencer.imageLink)}
                             </div>
-                            <div>
+                            <div >
                               <TfiExchangeVertical />
                             </div>
                           </div>

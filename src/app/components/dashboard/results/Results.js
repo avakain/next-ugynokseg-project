@@ -63,7 +63,7 @@ export default function Addresult() {
       subscribers: form.subscribers,
       views: form.views,
     });
-    iSimageUpload ? await uploadImage('influencers', form.name, documentRef) :
+    iSimageUpload ? await uploadImage('results', form.name, documentRef) :
       await updateDoc(documentRef, {
         imageLink: form.imageLink,
       });

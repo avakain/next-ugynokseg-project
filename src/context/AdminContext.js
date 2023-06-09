@@ -55,6 +55,7 @@ const Provider = ({ children }) => {
         const collectionRef = collection(db, item);
         const documentRefToUpdate = doc(collectionRef, documentId);
         await uploadImage(item, form.name, documentRefToUpdate);
+        setIsImageUpload(null);
       }
     } catch (error) {
       console.error('Error adding document: ', error);
