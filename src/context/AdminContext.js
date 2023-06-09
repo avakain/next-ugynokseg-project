@@ -40,9 +40,7 @@ const Provider = ({ children }) => {
   }
 
   const handleDeleteItem = async (itemName, item) => {
-    const documentId = item.id
-    const documentRef = doc(db, itemName, documentId);
-    await deleteDoc(documentRef);
+    await deleteDoc(doc(db, itemName, item.id));
     setOpen(false);
   };
 
