@@ -25,7 +25,7 @@ const Provider = ({ children }) => {
           imageLink: downloadURL,
         });
         alert('Sikeres feltöltés');
-
+        setIsImageUpload(null);
       } catch (error) {
         console.log('Error uploading image:', error);
       }
@@ -40,7 +40,7 @@ const Provider = ({ children }) => {
   }
 
   const handleDeleteItem = async (itemName, item) => {
-    const documentId = item.id;
+    const documentId = item.id
     const documentRef = doc(db, itemName, documentId);
     await deleteDoc(documentRef);
     setOpen(false);
@@ -56,11 +56,11 @@ const Provider = ({ children }) => {
         const documentRefToUpdate = doc(collectionRef, documentId);
         await uploadImage(item, form.name, documentRefToUpdate);
         setIsImageUpload(null);
+        setOpen(false);
       }
     } catch (error) {
       console.error('Error adding document: ', error);
     }
-    setOpen(false)
   };
 
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import getDoument from "@/firebase/firestore/getData";
 import useAdminContext from '@/app/hooks/use-admin-context';
-import { doc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from "@/firebase/config";
 import InputComponent from "../../input/Inputcomponent";
 import Addinfluencermodal from "./Addinfluencermodal";
@@ -28,6 +28,7 @@ export default function AddInfluencers() {
     imageLink: '',
   });
 
+  console.log(influencers)
 
   useEffect(() => {
     const fetchInfluencers = async () => {
@@ -66,6 +67,9 @@ export default function AddInfluencers() {
       imageLink: influencers[index].imageLink,
     }));
   };
+
+
+
 
   const handleSave = async (index) => {
     setEdit(null);
@@ -121,12 +125,19 @@ export default function AddInfluencers() {
           />
         )}
         {influencers?.map((influencer, index) => (
-
           <div
             key={influencer.id}
             className={`flex ${edit !== index ? 'xs:flex-row border-gray-200' : 'xs:flex-col border-red-400 bg-gray-100'
               } justify-between border-2 font-light border-gray-200 p-3 rounded-lg my-2`}
           >
+            {openDeleteAlert && (
+              <Alertdelete
+                handleDelete={() => handleDeleteItem('influencers', influencer)}
+                setOpenDeleteAlert={() => setOpenDeleteAlert(false)}
+                onChange={() => setOnChange(!onChange)}
+              />
+            )
+            }
             <div
               className="sm:grid">
               {edit === index ? (
@@ -222,14 +233,6 @@ export default function AddInfluencers() {
                     setOpenDeleteAlert(true);
                   }}
                 />
-                {openDeleteAlert && (
-                  <Alertdelete
-                    handleDelete={() => handleDeleteItem('influencers', influencer)}
-                    setOpenDeleteAlert={() => setOpenDeleteAlert(false)}
-                    onChange={() => setOnChange(!onChange)}
-                  />
-                )
-                }
               </div>
             </div>
           </div>

@@ -30,9 +30,8 @@ export default function InfluencerItem({ name, social, src }) {
           <Image
             src={`${src}`}
             alt={name}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
+            width={300}
+            height={300}
             className='mb-2 w-max text-xl'
           />
         </div>

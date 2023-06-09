@@ -4,13 +4,13 @@ import React from "react";
 export default function Alertdelete({
   setOpenDeleteAlert,
   handleDelete,
-  onChange
+  onChange,
 }) {
   const handleClick = (e) => {
     console.log(e.target.textContent);
-    console.log(setOpenDeleteAlert)
     setOpenDeleteAlert(true);
     const text = e.target.textContent;
+
     if (text === "Mégse") {
       setOpenDeleteAlert();
     } else {
