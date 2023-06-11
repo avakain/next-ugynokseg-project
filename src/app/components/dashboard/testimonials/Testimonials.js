@@ -9,6 +9,7 @@ import { BsPencil, BsFillTrash3Fill } from 'react-icons/bs';
 import { IoIosSave } from 'react-icons/io';
 import { MdOutlineLibraryAdd } from 'react-icons/md';
 import Alertdelete from "../../alert/Alertdelete";
+import Influencer from "../../influencers/Influencers";
 
 export default function Admintestimonial() {
   const { isOpen, setOpen, handleDeleteItem, } = useAdminContext();
@@ -127,11 +128,12 @@ export default function Admintestimonial() {
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
                     setOpenDeleteAlert(true);
+                    setEdit(testimonial)
                   }}
                 />
                 {openDeleteAlert && (
                   <Alertdelete
-                    handleDelete={() => handleDeleteItem('testimonials', testimonial)}
+                    handleDelete={() => handleDeleteItem('testimonials', edit)}
                     setOpenDeleteAlert={() => setOpenDeleteAlert(false)}
                     onChange={() => setOnChange(!onChange)}
                   />

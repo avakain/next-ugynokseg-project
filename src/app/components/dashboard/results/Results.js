@@ -190,11 +190,12 @@ export default function Addresult() {
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
                     setOpenDeleteAlert(true);
+                    setEdit(result)
                   }}
                 />
                 {openDeleteAlert && (
                   <Alertdelete
-                    handleDelete={() => handleDeleteItem('results', result)}
+                    handleDelete={() => handleDeleteItem('results', edit)}
                     setOpenDeleteAlert={() => setOpenDeleteAlert(false)}
                     onChange={() => setOnChange(!onChange)}
                   />

@@ -46,7 +46,7 @@ export default function ContactUs() {
         {/* Added input field for phone number */}
         <label
           className="block text-xl font-medium text-gray-700 mb-2"
-        >Telefonszám:<span className="text-red-500">`&#42;`</span></label>
+        >Telefonszám:<span className="text-red-500">&#42;</span></label>
         <input type="tel" name="user_phone"
           className="appearance-none block w-full bg-gray-50 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight
       focus:outline-none  focus:border-red-500 focus:ring-1 focus:ring-purple-500

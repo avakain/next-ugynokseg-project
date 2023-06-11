@@ -18,7 +18,7 @@ export default function AddInfluencers() {
   const [influencers, setInfluencers] = useState([]);
   const [edit, setEdit] = useState(false);
   const [onChange, setOnChange] = useState(false);
-  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(null);
   const [form, setForm] = useState({
     name: '',
     socialmedia: {
@@ -28,7 +28,7 @@ export default function AddInfluencers() {
     imageLink: '',
   });
 
-  console.log(influencers)
+
 
   useEffect(() => {
     const fetchInfluencers = async () => {
@@ -130,14 +130,6 @@ export default function AddInfluencers() {
             className={`flex ${edit !== index ? 'xs:flex-row border-gray-200' : 'xs:flex-col border-red-400 bg-gray-100'
               } justify-between border-2 font-light border-gray-200 p-3 rounded-lg my-2`}
           >
-            {openDeleteAlert && (
-              <Alertdelete
-                handleDelete={() => handleDeleteItem('influencers', influencer)}
-                setOpenDeleteAlert={() => setOpenDeleteAlert(false)}
-                onChange={() => setOnChange(!onChange)}
-              />
-            )
-            }
             <div
               className="sm:grid">
               {edit === index ? (
@@ -231,8 +223,16 @@ export default function AddInfluencers() {
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
                     setOpenDeleteAlert(true);
+                    setEdit(influencer)
                   }}
                 />
+                {openDeleteAlert && (
+                  <Alertdelete
+                    handleDelete={() => handleDeleteItem('influencers', edit)}
+                    setOpenDeleteAlert={() => setOpenDeleteAlert(false)}
+                    onChange={() => setOnChange(!onChange)}
+                  />
+                )}
               </div>
             </div>
           </div>

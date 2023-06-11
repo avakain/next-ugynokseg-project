@@ -13,8 +13,6 @@ const raleway = Raleway({
   weight: ['400', '700']
 })
 
-
-
 export const metadata = {
   title: 'Az ügynökség',
   description: 'Socialmedia szolgaltatasok',
@@ -25,8 +23,8 @@ export default function RootLayout({ children }) {
 
   const shouldHideNavAndFooter = pathname === '/login-admin' ||
     pathname === '/admin' ||
-    pathname === '/admin/add-review' ||
-    pathname === '/admin/add-influencer';
+    pathname === '/form' ||
+    pathname === '/success';
 
   return (
     <html lang="en">

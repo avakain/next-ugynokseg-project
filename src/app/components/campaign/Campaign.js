@@ -1,23 +1,39 @@
 'use client'
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
+import getDoument from "@/firebase/firestore/getData";
 import { Autoplay, Pagination } from "swiper";
 import CampaignItem from "./CampaignItem";
 import "swiper/css";
 import "swiper/css/pagination";
-import { CHANNELS } from "@/app/content/content";
 
-/**
- * TODO create and use renderCampaings as a react component 
- * TODO use other than index as key
- */
 
-export default function campaign() {
+export default function Campaign() {
 
-  const renderCampaigns = () => {
-    return CHANNELS.map((channel, index) => {
+  const [campaigns, setCampaigns] = useState([]);
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const { result, error } = await getDoument('results');
+        if (error) {
+          console.log(error);
+        } else {
+          setCampaigns(result);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCampaigns();
+  }, []);
+
+
+
+  const Rendercampaigns = () => {
+    return campaigns.map((campaign, index) => {
       return (
         <SwiperSlide key={index}>
-          <CampaignItem channel={channel} />
+          <CampaignItem campaign={campaign} />
         </SwiperSlide>
       )
     })
@@ -51,7 +67,7 @@ export default function campaign() {
           "--swiper-pagination-bullet-border-radius": "5px",
         }}
       >
-        {renderCampaigns()}
+        {Rendercampaigns()}
       </Swiper>
     </div>
   )

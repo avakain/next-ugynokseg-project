@@ -1,19 +1,37 @@
 'use client'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper";
-import CarouselItem from "./CarouselItem";
-import { TESTEMONIALS } from "@/app/content/content";
+import TestimonialItems from "./TestimonialItems";
+import { useEffect, useState } from "react";
+import getDoument from "@/firebase/firestore/getData";
 import "swiper/css";
 import "swiper/css/pagination";
 
 
-export default function Carousel() {
+export default function Testimonials() {
+
+  const [testimonials, setTestimonials] = useState([]);
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const { result, error } = await getDoument('testimonials');
+        if (error) {
+          console.log(error);
+        } else {
+          setTestimonials(result);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   const renderTestemonials = () => {
-    return TESTEMONIALS.map((testemonial, index) => {
+    return testimonials.map((testemonial, index) => {
       return (
         <SwiperSlide key={index}>
-          <CarouselItem key={index} content={testemonial.content} brand={testemonial.name} />
+          <TestimonialItems key={index} content={testemonial.content} brand={testemonial.name} />
         </SwiperSlide>)
     })
   }
@@ -33,10 +51,7 @@ export default function Carousel() {
                 <br className="hidden sm:block lg:hidden" />
                 Hidd az ügyfeleinknek!
               </h2>
-              <p className="mt-4 text-gray-500">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas
-                veritatis illo placeat harum porro optio fugit a culpa sunt id!
-              </p>
+
             </div>
             <div className="-mx-6  lg:col-span-2 lg:mx-0 ">
 

@@ -22,7 +22,7 @@ export default function Influencer() {
   }, []);
 
 
-  const renderInfluencers = () => {
+  const RenderInfluencers = () => {
     return influencers.map((influencer, index) => {
       return <InfluencerItem
         key={index}
@@ -38,7 +38,7 @@ export default function Influencer() {
         <p>Portfóliónk</p>
       </div>
       <div className="m-8 grid  gap-y-5 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-        {renderInfluencers()}
+        <RenderInfluencers />
       </div>
     </div>
   )

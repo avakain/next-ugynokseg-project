@@ -1,4 +1,4 @@
-export default function Casestudy({ svg, title, header, subtitle, colored }) {
+export default function ResultItems({ svg, title, header, subtitle, colored }) {
   return (
     <div className="xs:mx-1">
       <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-red-500 shadow-md">

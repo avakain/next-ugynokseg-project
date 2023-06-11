@@ -11,7 +11,6 @@ export default function Login() {
 
   const handleForm = async (event) => {
     event.preventDefault()
-
     const { result, error } = await signIn(email, password);
 
     if (error) {

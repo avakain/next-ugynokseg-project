@@ -3,8 +3,8 @@ import { FaTiktok } from 'react-icons/fa';
 import Image from 'next/image';
 
 export default function InfluencerItem({ name, social, src }) {
-  const imageLoader = ({ src }) => {
-    return `${src}`;
+  const imageLoader = ({ src, width, height }) => {
+    return `${src}?w=${width}&h=${height}`;
   };
 
   function formatNumber(number) {
