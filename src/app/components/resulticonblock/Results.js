@@ -39,7 +39,7 @@ const CASE_STUDY = [
 
 export default function Result() {
   return (
-    <div className="m-6 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+    <div className="mx-6 my-32 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
       {CASE_STUDY.map((study) => (
         <ResultItems
           key={study.id}

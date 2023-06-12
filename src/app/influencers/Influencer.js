@@ -1,63 +1,46 @@
-import InfluencerItem from "./InfluencerItem"
+"use client"
 
-
-const data = [
-  {
-    name: "Farkas Timi",
-    socialMedia: {
-      tiktok: 620000,
-      instagram: 417000,
-    },
-    img: '/images/influencers/farkas_timi.jpg'
-
-  },
-  {
-    name: "Zsigmond Andi",
-    socialMedia: {
-      tiktok: 650000,
-      instagram: 145000
-    },
-    img: '/images/influencers/zsigmond_angi.jpg'
-  },
-  {
-    name: "Telefondoki",
-    socialMedia: {
-      tiktok: 100000
-    },
-    img: '/images/influencers/telefondoki.jpg'
-  },
-  {
-    name: "Szurma András",
-    socialMedia: {
-      tiktok: 220000,
-      instagram: 50000
-    },
-    img: '/images/influencers/szurma_andras.jpg'
-  }
-];
+import InfluencerItem from "./InfluencerItem";
+import { useState, useEffect } from "react";
+import getDoument from "@/firebase/firestore/getData";
 
 
 export default function Influencer() {
+  const [influencers, setInfluencers] = useState([]);
+  useEffect(() => {
+    const fetchInfluencers = async () => {
+      try {
+        const { result, error } = await getDoument('influencers');
+        if (error) {
+          console.log(error);
+        } else {
+          setInfluencers(result);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchInfluencers();
+  }, []);
 
-  const renderInfluencers = () => {
 
-    return data.map((influencer) => {
+  const RenderInfluencers = () => {
+    return influencers.map((influencer, index) => {
       return <InfluencerItem
-        key={influencer.name}
+        key={index}
         name={influencer.name}
-        social={influencer.socialMedia}
-        src={influencer.img} />
+        social={influencer.socialmedia}
+        src={influencer.imageLink} />
     })
   }
 
-
   return (
-    <div>
-      <div>
+    <div className="mt-50px">
+      <div className="m-8 my-15 text-4xl">
         <p>Portfóliónk</p>
       </div>
       <div className="m-8 grid  gap-y-5 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-        {renderInfluencers()}
+        <RenderInfluencers />
       </div>
     </div>
   )

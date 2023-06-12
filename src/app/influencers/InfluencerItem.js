@@ -3,6 +3,9 @@ import { FaTiktok } from 'react-icons/fa';
 import Image from 'next/image';
 
 export default function InfluencerItem({ name, social, src }) {
+  const imageLoader = ({ src, width, height }) => {
+    return `${src}?w=${width}&h=${height}`;
+  };
 
   function formatNumber(number) {
     const suffixes = ['', 'K', 'M', 'B', 'T'];
@@ -16,25 +19,24 @@ export default function InfluencerItem({ name, social, src }) {
   }
 
   const followersAll = () => {
-    return social.instagram ? social.instagram + social.tiktok : social.tiktok
+    const instagram = social.instagram === '' ? 0 : parseInt(social.instagram);
+    const tiktok = social.tiktok === '' ? 0 : parseInt(social.tiktok);
+    const totalFollowers = instagram + tiktok;
+    return totalFollowers;
   }
+
 
   return (<div>
     <div className="max-w-sm m-auto mt-16 rounded-xl overflow-hidden shadow-lg ">
-
-
-
-
       <div className='border-b-2 border-gray-100 pb-2'>
-        <div className="image-container">
-          <Image
-            src={`${src}`}
-            alt={name}
-            width={300}
-            height={300}
-            className='mb-2 w-max text-xl'
-          />
-        </div>
+        <Image
+          loader={imageLoader}
+          src={src}
+          alt={name}
+          width={500}
+          height={500}
+          className='mb-2 w-max text-xl'
+        />
         <div className="font-medium text-left text-gray-darker ml-6">{name}</div>
       </div>
 

@@ -14,7 +14,7 @@ export default function Hero({ heading, message }) {
         <div className="xs:grid sm:flex sm:justify-center">
           <Button className={"bg-indigo-500 px-8 py-2  hover:bg-indigo-700  duration-100"}
           >
-            <Link href="/form">Időpont foglalás</Link>
+            <Link href="/form">Írj nekünk</Link>
           </Button>
           <Button className={"bg-red-500 px-8 py-2  hover:bg-red-700 duration-100"}>
             Eredményeink

@@ -13,16 +13,19 @@ export default function Home() {
     <main>
       <Hero heading='Kimagasló elérés márkádnak Influencerekkel' message='Kreatív stratégiáink és hatékony kampányaink segítségével garantáltan felhívjuk rád a figyelmet és növeljük márkád ismertségét. Lépj velünk a következő szintre!' />
       <div className="conent">
+        <Results />
         <Introducion
           header={'Növeld az online elérésed'}
-          title={'Segítünk  TikTok és YouTube short  videók készítésében, kezeljük a céged Instagram és Facebook oldalad. '}
-          title2={'Függetlenül attól, hogy milye céljaid vannak, mekkora a vállalkozásod, vagy hol helyezkedsz el, Mi segítségünkkel elérheted a célközönségedet. Légy te a következő siker strorynk!'}
+          title={'Az influencer marketing egy nagyon hatékony eszköz a vállalkozások számára, mert lehetővé teszi, hogy közvetlen kapcsolatot építsenek ki a célközönséggel.'}
+          title2={`Függetlenül attól, hogy milye céljaid vannak, mekkora a vállalkozásod, vagy hol helyezkedsz el. A Mi segítségünkkel könnyen elérheted a célközönségedet.
+           `}
+          title3={'Légy te a következő siker strorynk!'}
         />
-        <Results />
+        <WeBelive />
         <Carousel />
         <Influencer />
         <Campaign />
-        <WeBelive />
+
       </div>
     </main>
   )
