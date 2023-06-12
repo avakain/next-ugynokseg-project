@@ -3,6 +3,13 @@ import Link from "next/link"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useEffect, useState } from "react"
 import { usePathname } from 'next/navigation'
+import { Anton } from "next/font/google";
+
+const anton = Anton({
+  subsets: ['latin'],
+  weight: ['400',]
+})
+
 
 /**
  * TODO create a LIGHT_THEM and DARK_THEME object
@@ -55,7 +62,7 @@ export default function NavBar() {
       className="fixed left-0 top-0 w-full z-10 ease-in duration-300">
       <div className=" my-2 text-lg flex justify-between items-center text-white">
         <Link href='/'>
-          <h1 style={{ color: textColor }} className="font-bold text-4xl">Logo</h1>
+          <h1 style={{ color: textColor }} className={`font-bold text-3xl ml-3 ${anton.className}`}>Az Ügynökség</h1>
         </Link>
         <ul
           style={{ color: textColor }}
@@ -67,12 +74,12 @@ export default function NavBar() {
           </li>
           <li className="p-4 text-lg">
             <Link href='/'>
-              Portfóliók
+              Kapcsolat
             </Link>
           </li>
           <li className="p-4 text-lg">
             <Link href='/'>
-              Kampányaink
+              Eredményeink
             </Link>
           </li>
         </ul>
@@ -108,12 +115,12 @@ export default function NavBar() {
             </li>
             <li className="p-4 text-4xl hover:text-gray-500">
               <Link href='/'>
-                Portfólió
+                Kapcsolat
               </Link>
             </li>
             <li className="p-4 text-4xl hover:text-gray-500">
               <Link href='/'>
-                Kampányaink
+                Eredményeink
               </Link>
             </li>
           </ul>

@@ -26,9 +26,10 @@ export default function SideBar() {
   ];
 
   React.useEffect(() => {
-    if (user == null) router.push("/")
-  }, [user])
-
+    if (user == null) {
+      router.push("/");
+    }
+  }, [user, router]);
 
   return (
     <div>
