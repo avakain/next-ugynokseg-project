@@ -13,10 +13,6 @@ const raleway = Raleway({
   weight: ['400', '700']
 })
 
-export const metadata = {
-  title: 'Az ügynökség',
-  description: 'Socialmedia szolgaltatasok',
-}
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
