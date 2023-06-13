@@ -2,10 +2,12 @@
 import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import Button from '../components/button/Button';
+import { useRouter } from 'next/navigation'
 
 
 export default function ContactUs() {
   const form = useRef();
+  const router = useRouter()
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -47,12 +49,15 @@ export default function ContactUs() {
         <label
           className="block text-xl font-medium text-gray-700 mb-2"
         >Telefonszám:<span className="text-red-500">&#42;</span></label>
-        <input type="tel" name="user_phone"
+        <input
+          type="tel"
+          name="user_phone"
           className="appearance-none block w-full bg-gray-50 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight
       focus:outline-none  focus:border-red-500 focus:ring-1 focus:ring-purple-500
       disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
       focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-          required />
+          required
+        />
         {/* Added input field for email */}
         <label
           className="block text-xl font-medium text-gray-700 mb-2"
@@ -65,12 +70,14 @@ export default function ContactUs() {
       focus:outline-none  focus:border-red-500 focus:ring-1 focus:ring-purple-500
       disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
       focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-          required />
+          required
+        />
         {/* Added input field for company */}
         <label
           className="block text-xl font-medium text-gray-700 mb-2"
         >Cég:</label>
-        <input type="text" name="user_company"
+        <input type="text"
+          name="user_company"
           className="appearance-none block w-full bg-gray-50 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight
       focus:outline-none  focus:border-red-500 focus:ring-1 focus:ring-purple-500
       disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
@@ -79,7 +86,10 @@ export default function ContactUs() {
         {/* Added textarea field for message */}
         <label
           className="block text-xl font-medium text-gray-700 mb-2"
-        >Üzenet:<span className="text-red-500">&#42;</span></label>
+        >Üzenet:
+          <span className="text-red-500">
+            &#42;
+          </span></label>
         <textarea rows="7"
           className="appearance-none block w-full bg-gray-50 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight
           focus:outline-none  focus:border-red-500 focus:ring-1 focus:ring-purple-500

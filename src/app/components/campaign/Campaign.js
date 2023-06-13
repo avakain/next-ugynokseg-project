@@ -41,7 +41,9 @@ export default function Campaign() {
 
 
   return (
-    <div className="">
+    <div
+      id='campaigns'
+    >
       <Swiper
         initialSlide={2}
         loop={true}

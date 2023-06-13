@@ -86,12 +86,12 @@ export default function NavBar() {
             </Link>
           </li>
           <li className="p-4 text-lg">
-            <Link href='/'>
+            <Link href='/form'>
               Kapcsolat
             </Link>
           </li>
           <li className="p-4 text-lg">
-            <Link href='/'>
+            <Link href='#campaigns'>
               Eredményeink
             </Link>
           </li>
@@ -121,18 +121,18 @@ export default function NavBar() {
         }>
 
           <ul>
-            <li className="p-4 text-4xl hover:text-gray-500 ">
+            <li className="p-4 text-3xl hover:text-gray-500 ">
               <Link href='/'>
                 Főoldal
               </Link>
             </li>
-            <li className="p-4 text-4xl hover:text-gray-500">
-              <Link href='/'>
+            <li className="p-4 text-3xl hover:text-gray-500">
+              <Link href='/form'>
                 Kapcsolat
               </Link>
             </li>
-            <li className="p-4 text-4xl hover:text-gray-500">
-              <Link href='/'>
+            <li className="p-4 text-3xl hover:text-gray-500">
+              <Link href='#campaigns'>
                 Eredményeink
               </Link>
             </li>

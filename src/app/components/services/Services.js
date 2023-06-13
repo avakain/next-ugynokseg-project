@@ -40,7 +40,7 @@ export default function WeBelive() {
         </p>
       </div>
       <div className="grid items-center ">
-        <div className="my-8 text-xl">{content.title}</div>
+        <div className="my-8 text-3xl">{content.title}</div>
         <div className="grid md:grid-cols-2  sm:grid-cols-1 gap-6 relative  bg-clip-border rounded-xl ">
           {content.items.map((item, index) => (
             <div key={index} className="bg-white p-6 rounded-lg bg-clip-border ">
