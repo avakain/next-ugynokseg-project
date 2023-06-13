@@ -4,6 +4,7 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useEffect, useState } from "react"
 import { usePathname } from 'next/navigation'
 import { Anton } from "next/font/google";
+import { useRef } from "react";
 
 const anton = Anton({
   subsets: ['latin'],
@@ -18,6 +19,7 @@ export default function NavBar() {
 
   const pathname = usePathname();
   const [open, setOpen] = useState(false)
+
 
   const [{ bgColor, textColor }, setTheme] = useState(
     pathname === '/' ? {
@@ -34,28 +36,39 @@ export default function NavBar() {
     setOpen(!open)
   }
 
-  const changeColor = () => {
-    if (window.scrollY <= 90 && pathname === '/') {
-      setTheme({
-        bgColor: 'transparent',
-        textColor: 'white'
-      })
-    } else {
-      setTheme({
-        bgColor: 'white',
-        textColor: 'black'
-
-      })
-    }
-  };
+  const previousScrollYRef = useRef(0);
 
   useEffect(() => {
+    // Initialize previousScrollYRef with a value of 0
+
+    const changeColor = () => {
+      const { scrollY } = window;
+      if (scrollY <= 90 && pathname === '/') {
+        setTheme({
+          bgColor: 'transparent',
+          textColor: 'white'
+        });
+      } else if (scrollY < previousScrollYRef.current) {
+        setTheme({
+          bgColor: 'transparent',
+          textColor: 'transparent'
+        });
+      } else {
+        setTheme({
+          bgColor: 'white',
+          textColor: 'black'
+        });
+      }
+      previousScrollYRef.current = scrollY; // Update the value of previousScrollYRef
+    };
+
     window.addEventListener('scroll', changeColor);
+
     // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener('scroll', changeColor);
     };
-  }, []);
+  }, [pathname, setTheme]);
 
   return (
     <div style={{ backgroundColor: bgColor, color: textColor }}

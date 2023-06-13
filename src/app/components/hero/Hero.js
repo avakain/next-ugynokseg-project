@@ -12,11 +12,11 @@ export default function Hero({ heading, message }) {
           <p className="py-5 text-xl">{message}</p>
         </div>
         <div className="xs:grid sm:flex sm:justify-center">
-          <Button className={"bg-indigo-500 px-8 py-2  hover:bg-indigo-700  duration-100"}
+          <Button className={"bg-indigo-500 px-8 py-2  hover:bg-indigo-700  duration-100 md:w-40"}
           >
             <Link href="/form">Írj nekünk</Link>
           </Button>
-          <Button className={"bg-red-500 px-8 py-2  hover:bg-red-700 duration-100"}>
+          <Button className={"bg-red-500 px-8 py-2  hover:bg-red-700 duration-100 md:w-40"}>
             Eredményeink
           </Button>
         </div>

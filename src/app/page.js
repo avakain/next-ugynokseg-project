@@ -5,13 +5,13 @@ import Carousel from "./components/testimonials/Testimonials"
 import Hero from "./components/hero/Hero";
 import Influencer from "./components/influencers/Influencers"
 import Campaign from "./components/campaign/Campaign";
-import WeBelive from "./components/webelive/WeBelive";
+import Services from "./components/services/Services";
 
 export default function Home() {
 
   return (
     <main>
-      <Hero heading='Kimagasló elérés márkádnak Influencerekkel' message='Kreatív stratégiáink és hatékony kampányaink segítségével garantáltan felhívjuk rád a figyelmet és növeljük márkád ismertségét. Lépj velünk a következő szintre!' />
+      <Hero heading='Kimagasló elérés cégednek Influencerekkel' message='Kreatív stratégiáink és hatékony kampányaink segítségével garantáltan felhívjuk rád a figyelmet és növeljük márkád ismertségét. Lépj velünk a következő szintre!' />
       <div className="conent">
         <Results />
         <Introducion
@@ -21,10 +21,10 @@ export default function Home() {
            `}
           title3={'Légy te a következő siker strorynk!'}
         />
-        <WeBelive />
-        <Carousel />
+        <Services />
         <Influencer />
         <Campaign />
+        <Carousel />
       </div>
     </main>
   )

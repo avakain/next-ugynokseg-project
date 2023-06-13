@@ -28,14 +28,18 @@ const content = {
 
 export default function WeBelive() {
   return (
-    <div className="grid md:grid-cols-2 gap-6 xs:grid-cols-1 bg-slate-400 p-6 m-8">
-      <div className="grid items-center">
-        Mi őszintén hiszünk az influencer marketingben, a pontosan megtervezett
-        kampányok sikereiben amivel a közönség is könnyen tudnak azonosulni.
-        Az általunk készített videókban fontos számunkra hogy élményt adjunk az nézőinknek a tartalmaink által,
-        így lesz az influencer marketing sikeres és hatásos.
+    <div className="grid md:grid-cols-6 gap-6 xs:grid-cols-1 bg-slate-100 p-6 rounded-md">
+      <div className="flex flex-col justify-center md:col-start-1 col-end-3">
+        <p>
+          Mi őszintén hiszünk abban, amit csinálunk. A pontosan megtervezett kampányok sikereiben, amivel a közönség könnyen tud azonosulni.
+        </p>
+        <br className="m-3" />
+        <p>
+          Az általunk készített videókban fontos számunkra, hogy élményt adjunk nézőinknek a tartalmaink által.
+          Így lesz az influencer marketing sikeres és hatásos.
+        </p>
       </div>
-      <div className="grid items-center">
+      <div className="grid items-center md:col-start-3 col-end-8">
         <div className="my-8 text-xl">{content.title}</div>
         <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-6 relative  bg-clip-border rounded-xl">
           {content.items.map((item, index) => (
@@ -44,7 +48,6 @@ export default function WeBelive() {
               <div className="border-t border-blue-gray-50">
                 <div className="mt-2">{item.text}</div>
               </div>
-
             </div>
           ))}
         </div>

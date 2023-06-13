@@ -29,7 +29,7 @@ export default function Footer() {
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">&copy; 2023 <a href="/" className="hover:underline"><span className={anton.className}>Az ügynökség</span>
-            &trade;</a>&copy; All Rights Reserved.</span>
+          </a> All Rights Reserved.</span>
         </div>
       </footer>
     </div>
