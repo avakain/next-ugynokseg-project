@@ -28,10 +28,10 @@ const content = {
 
 export default function WeBelive() {
   return (
-    <div className="grid md:grid-cols-6 gap-6 xs:grid-cols-1 bg-slate-100 p-6 rounded-md">
-      <div className="flex flex-col justify-center md:col-start-1 col-end-3">
+    <div className="grid md:grid-cols-2  xs:grid-cols-1 md:gap-6 lg:gap-10 bg-slate-100 p-6">
+      <div className="flex flex-col justify-center md:col-start-1 md:col-end-2 ">
         <p>
-          Mi őszintén hiszünk abban, amit csinálunk. A pontosan megtervezett kampányok sikereiben, amivel a közönség könnyen tud azonosulni.
+          Mi őszintén hiszünk abban, amit csinálunk, a pontosan megtervezett kampányok sikereiben, amivel a közönség könnyen tud azonosulni.
         </p>
         <br className="m-3" />
         <p>
@@ -39,9 +39,9 @@ export default function WeBelive() {
           Így lesz az influencer marketing sikeres és hatásos.
         </p>
       </div>
-      <div className="grid items-center md:col-start-3 col-end-8">
+      <div className="grid items-center ">
         <div className="my-8 text-xl">{content.title}</div>
-        <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-6 relative  bg-clip-border rounded-xl">
+        <div className="grid md:grid-cols-2  sm:grid-cols-1 gap-6 relative  bg-clip-border rounded-xl ">
           {content.items.map((item, index) => (
             <div key={index} className="bg-white p-6 rounded-lg bg-clip-border ">
               <div className="mb-3" >{item.icon}</div>
