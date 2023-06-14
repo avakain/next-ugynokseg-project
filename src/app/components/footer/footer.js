@@ -22,7 +22,7 @@ export default function Footer() {
                 <a href="#" className="mr-4 hover:underline md:mr-6 ">Rólunk</a>
               </li>
               <li>
-                <a href="#" className="hover:underline">Contact</a>
+                <a href="/form" className="hover:underline">Contact</a>
               </li>
             </ul>
           </div>

@@ -5,26 +5,38 @@ import Button from '../components/button/Button';
 import { useRouter } from 'next/navigation'
 
 
+
 export default function ContactUs() {
   const form = useRef();
-  const router = useRouter()
+  const router = useRouter();
 
   const sendEmail = (e) => {
     e.preventDefault();
-    router.push('/success')
+    router.push('/success');
+
+    console.log(
+      process.env.NEXT_PUBLIC_SERVICE_ID,
+      process.env.NEXT_PUBLIC_TEMPLATE_ID,
+      process.env.NEXT_PUBLIC_USER_ID)
+
     emailjs
       .sendForm(
-        process.env.SERVICE_ID,
-        process.env.TEMPLATE_ID,
+        process.env.NEXT_PUBLIC_SERVICE_ID,
+        process.env.NEXT_PUBLIC_TEMPLATE_ID,
         form.current,
-        process.env.PUBLIC_KEY
+        process.env.NEXT_PUBLIC_USER_ID
       )
-      .then((result) => {
-        console.log(result.text);
-        console.log('message sent');
-      }, (error) => {
-        console.log(error.text);
-      });
+      .then(
+        (result) => {
+          console.log(result.text);
+          console.log('message sent');
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+
+    e.target.reset();
   };
 
   return (

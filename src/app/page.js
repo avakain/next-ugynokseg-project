@@ -22,7 +22,6 @@ export default function Home() {
           title3={'Légy te a következő siker strorynk!'}
         />
         <Services />
-        <Influencer />
         <Campaign />
         <Carousel />
       </div>
