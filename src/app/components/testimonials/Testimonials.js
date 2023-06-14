@@ -1,14 +1,19 @@
 'use client'
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper";
+import { Autoplay, Pagination, Navigation } from "swiper";
 import TestimonialItems from "./TestimonialItems";
 import { useEffect, useState } from "react";
 import getDoument from "@/firebase/firestore/getData";
+import { SwiperNavButtons } from "./SwiperNavButton";
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
+
 
 
 export default function Testimonials() {
+
+
 
   const [testimonials, setTestimonials] = useState([]);
   useEffect(() => {
@@ -30,17 +35,23 @@ export default function Testimonials() {
   const renderTestemonials = () => {
     return testimonials.map((testemonial, index) => {
       return (
-        <SwiperSlide key={index}>
-          <TestimonialItems key={index} content={testemonial.content} brand={testemonial.name} />
-        </SwiperSlide>)
+        <SwiperSlide
+          key={index}>
+          <TestimonialItems
+            key={index}
+            content={testemonial.content}
+            brand={testemonial.name} />
+        </SwiperSlide>
+      )
     })
   }
+
 
   return (
     <>
       <section className="bg-gray-100 rounded-xl md:mx-8">
         <div
-          className="mx-auto max-w-[1500px] px-2 py-16 sm:px-6 sm:py-24 lg:me-0 lg:pe-0 lg:ps-8 border-radius-2xl"
+          className="mx-auto max-w-[1500px] px-2 py-16 sm:px-6 sm:py-24 lg:me-0 lg:pe-0 lg:ps-8 border-radius-2xl md:my-8"
         >
           <div
             className="grid grid-cols-1 gap-y-8 lg:grid-cols-3 lg:items-center lg:gap-x-16 xs:m-6"
@@ -53,15 +64,19 @@ export default function Testimonials() {
               </h2>
 
             </div>
-            <div className="-mx-6  lg:col-span-2 lg:mx-0 ">
-
+            <div className="mx-2 lg:col-span-2 lg:mx-0">
               <Swiper
+                autoHeight={true}
                 initialSlide={2}
                 loop={true}
                 slidesPerView={'auto'}
                 spaceBetween={50}
                 autoplay={{
                   delay: 8000,
+                }}
+                navigation={{
+                  nextEl: '.next-button',
+                  prevEl: '.prev-button',
                 }}
                 speed={1000}
                 pagination={{
@@ -72,21 +87,25 @@ export default function Testimonials() {
                   1024: {
                     slidesPerView: 1.5,
                     centeredSlides: true,
+                    autoHeight: false
                   },
+
                 }}
-                modules={[Pagination, Autoplay]}
+                modules={[Pagination, Autoplay, Navigation]}
                 className="mySwiper"
                 style={{
+
                   "--swiper-pagination-color": "#C74E75",
                   "--swiper-pagination-bullet-inactive-color": "#999999",
                   "--swiper-pagination-bullet-inactive-opacity": "1",
                   "--swiper-pagination-bullet-height": "4px",
                   "--swiper-pagination-bullet-width": "20px",
                   "--swiper-pagination-bullet-horizontal-gap": "6px",
-                  "--swiper-pagination-bullet-border-radius": "5px",
+                  "--swiper-pagination-bullet-border-radius": "5px"
                 }}
               >
                 {renderTestemonials()}
+
               </Swiper>
             </div>
           </div>

@@ -48,7 +48,9 @@ export default function ContactUs() {
         {/* Added input field for phone number */}
         <label
           className="block text-xl font-medium text-gray-700 mb-2"
-        >Telefonszám:<span className="text-red-500">&#42;</span></label>
+        >
+          Telefonszám:
+          <span className="text-red-500">&#42;</span></label>
         <input
           type="tel"
           name="user_phone"
@@ -61,8 +63,9 @@ export default function ContactUs() {
         {/* Added input field for email */}
         <label
           className="block text-xl font-medium text-gray-700 mb-2"
-        >Email:<span className="text-red-500">&#42;</span>
-        </label>
+        >
+          Email:
+          <span className="text-red-500">&#42;</span></label>
         <input
           type="email"
           name="user_email"

@@ -16,7 +16,7 @@ export default function page() {
             <p className="text-lg text-center mb-5">A csapatunk hamarosan jelentkezni fog.</p>
             <Button
               className="w-70% block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              <Link href='/'>
+              <Link href='../'>
                 Vissza a főoldalra
               </Link>
             </Button>
