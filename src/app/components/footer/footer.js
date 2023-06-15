@@ -11,7 +11,7 @@ const anton = Anton({
 export default function Footer() {
   return (
     <div className="dark:bg-white p-2">
-      <footer className="bg-white rounded-lg  dark:bg-gray-100 m-4 z-10 shadow-lg">
+      <footer className="bg-white rounded-lg  dark:bg-gray-100 m-6 z-10 shadow-lg">
         <div className="w-full max-w-screen-xl mx-auto md:py-8">
           <div className="sm:flex sm:justify-between xs:text-center xs:items-center p-4 ">
             <a href="https://flowbite.com/" className="flex items-center mb-4 sm:mb-0">

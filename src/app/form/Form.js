@@ -1,20 +1,26 @@
 "use client"
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import Button from '../components/button/Button';
 import { useRouter } from 'next/navigation'
+import ReCAPTCHA from 'react-google-recaptcha';
+
 
 
 
 export default function ContactUs() {
   const form = useRef();
   const router = useRouter();
+  const [isHuman, setIsHuman] = useState(false);
+  const handleRecaptcha = async () => {
+    const isTokenValid = true;
+    setIsHuman(isTokenValid);
+  }
+
 
   const sendEmail = (e) => {
     e.preventDefault();
     router.push('/success');
-
-
 
     emailjs
       .sendForm(
@@ -51,7 +57,7 @@ export default function ContactUs() {
       disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
       focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
           type="text"
-          name="last_name"
+          name="user_name"
           required
         />
         {/* Added input field for phone number */}
@@ -110,7 +116,14 @@ export default function ContactUs() {
           name="message"
           required
         />
-        <Button type="submit" className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Küldés</Button>
+        <ReCAPTCHA
+          className="grid justify-items-center mb-3 auto-rows-max"
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+          onChange={handleRecaptcha} />
+        {
+          isHuman ? <Button type="submit" className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Küldés</Button> : null
+        }
+
       </form>
     </div>
   );
