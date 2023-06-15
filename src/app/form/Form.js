@@ -14,10 +14,7 @@ export default function ContactUs() {
     e.preventDefault();
     router.push('/success');
 
-    console.log(
-      process.env.NEXT_PUBLIC_SERVICE_ID,
-      process.env.NEXT_PUBLIC_TEMPLATE_ID,
-      process.env.NEXT_PUBLIC_USER_ID)
+
 
     emailjs
       .sendForm(
