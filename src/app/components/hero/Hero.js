@@ -17,7 +17,9 @@ export default function Hero({ heading, message }) {
             <Link href="/form">Írj nekünk</Link>
           </Button>
           <Button className={"bg-red-500 px-8 py-2  hover:bg-red-700 duration-100 md:w-40"}>
-            Eredményeink
+            <Link href='#campaigns'>
+              Eredményeink
+            </Link>
           </Button>
         </div>
       </div>
