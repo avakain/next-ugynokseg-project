@@ -23,7 +23,7 @@ const InputComponent = ({
         </label>
         <textarea
           id={id}
-          rows={rows || 3}
+          rows={rows || 12}
           className="border-2 my-2 grow border-gray-300 bg-white pl-2 rounded-lg text-xl focus:outline-none h-auto"
           value={value}
           onChange={onChange}

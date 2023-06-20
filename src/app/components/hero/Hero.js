@@ -2,6 +2,7 @@ import Button from "../button/Button"
 import Link from "next/link"
 
 
+
 export default function Hero({ heading, message }) {
   return (
     <div className="flex items-center justify-center h-screen bg-fixed bg-cover  bg-bottom custom-img">

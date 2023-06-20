@@ -46,7 +46,7 @@ export default function Addtestimonialmodal() {
                     }))
                   }
                   textarea
-                  rows={7}
+                  rows={12}
                 />
               </form>
             </div>
