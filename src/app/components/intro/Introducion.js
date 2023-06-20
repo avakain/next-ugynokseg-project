@@ -16,7 +16,7 @@ export default function Introducion({ header, title, title2, title3 }) {
         <p className="my-4 text-lg">{title3}</p>
         <Link href="/form" >
           <div className='flex md:block'>
-            <Button className={"bg-indigo-500 px-8 py-2 md:px-32 hover:bg-indigo-700 xs:flex-grow md:block duration-100 text-white mt-8 "}
+            <Button className={"bg-indigo-500 px-8 py-2 sm:px-20 md:px-32 hover:bg-indigo-700 xs:flex-grow md:block duration-100 text-white mt-8 "}
             >
               Írj nekünk
             </Button>
