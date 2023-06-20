@@ -6,6 +6,7 @@ import Footer from './components/footer/footer'
 import { AuthContextProvider } from '@/context/AuthContext'
 import { usePathname } from 'next/navigation'
 import { Provider } from '@/context/AdminContext'
+import HeadComponent from './HeadComponent'
 
 
 const raleway = Raleway({
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
       <body className={raleway.className}>
         <AuthContextProvider>
           <Provider>
+            <HeadComponent />
             {!shouldHideNavAndFooter && <NavBar />}
             {children}
             {!shouldHideNavAndFooter && <Footer />}
