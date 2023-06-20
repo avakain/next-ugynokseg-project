@@ -1,6 +1,7 @@
 "use client"
 import dynamic from 'next/dynamic'
 
+
 const Form = dynamic(
   () => import('./Form'),
   { ssr: false }
@@ -8,10 +9,8 @@ const Form = dynamic(
 
 export default function page() {
   return (
-    <>
-      <div className='sm:m-auto md:max-w-xl'>
-        <Form />
-      </div>
-    </>
+    <div className='sm:m-auto md:max-w-xl'>
+      <Form />
+    </div>
   )
 }
