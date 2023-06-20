@@ -13,18 +13,19 @@ export default function Hero({ heading, message }) {
           <h2 className=" text-4xl font-bold">{heading}</h2>
           <p className="py-5 text-xl">{message}</p>
         </div>
-        <div className="xs:grid sm:flex sm:justify-center">
-          <Button className={"bg-indigo-500 px-8 py-2  hover:bg-indigo-700  duration-100 md:w-40"}
-          >
-            <Link href="/form">
+        <div className="xs:grid sm:flex sm:justify-center mx-4">
+          <Link href="/form">
+            <Button className={"bg-indigo-500 px-8 py-2  hover:bg-indigo-700  duration-100 sm:w-40 xs:w-full"}
+            >
               Írj nekünk
-            </Link>
-          </Button>
-          <Button className={"bg-red-500 px-8 py-2  hover:bg-red-700 duration-100 md:w-40"}>
-            <Link href='#campaigns'>
+            </Button>
+          </Link>
+          <Link href='#campaigns'>
+            <Button className={"bg-red-500 px-8 py-2  hover:bg-red-700 duration-100 md:sm-40 xs:w-full"}>
               Eredményeink
-            </Link>
-          </Button>
+            </Button>
+          </Link>
+
         </div>
       </div>
     </div>

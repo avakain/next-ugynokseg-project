@@ -11,7 +11,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 export default function ContactUs() {
   const form = useRef();
   const router = useRouter();
-  const [isHuman, setIsHuman] = useState(false);
+  const [isHuman, setIsHuman] = useState(true);
   const handleRecaptcha = async () => {
     const isTokenValid = true;
     setIsHuman(isTokenValid);
@@ -116,10 +116,10 @@ export default function ContactUs() {
           name="message"
           required
         />
-        <ReCAPTCHA
+        {<ReCAPTCHA
           className="grid justify-items-center mb-3 auto-rows-max"
-          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-          onChange={handleRecaptcha} />
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_TEST_SITE_KEY}
+          onChange={handleRecaptcha} />}
         {
           isHuman ? <Button type="submit" className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Küldés</Button> : null
         }
