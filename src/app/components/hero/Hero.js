@@ -21,7 +21,7 @@ export default function Hero({ heading, message }) {
             </Button>
           </Link>
           <Link href='#campaigns'>
-            <Button className={"bg-red-500 px-8 py-2  hover:bg-red-700 duration-100 md:sm-40 xs:w-full"}>
+            <Button className={"bg-red-500 px-8 py-2  hover:bg-red-700 duration-100 sm:w-40 xs:w-full"}>
               Eredményeink
             </Button>
           </Link>
