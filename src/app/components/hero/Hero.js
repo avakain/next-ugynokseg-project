@@ -1,6 +1,7 @@
 import Button from "../button/Button"
 import Link from "next/link"
 
+
 export default function Hero({ heading, message }) {
   return (
     <div className="flex items-center justify-center h-screen bg-fixed bg-cover  bg-bottom custom-img">
@@ -14,7 +15,9 @@ export default function Hero({ heading, message }) {
         <div className="xs:grid sm:flex sm:justify-center">
           <Button className={"bg-indigo-500 px-8 py-2  hover:bg-indigo-700  duration-100 md:w-40"}
           >
-            <Link href="/form">Írj nekünk</Link>
+            <Link href="/form">
+              Írj nekünk
+            </Link>
           </Button>
           <Button className={"bg-red-500 px-8 py-2  hover:bg-red-700 duration-100 md:w-40"}>
             <Link href='#campaigns'>

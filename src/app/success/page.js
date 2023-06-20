@@ -1,7 +1,6 @@
 "use client"
 import Button from "../components/button/Button"
-import Link from 'next/link';
-
+import Link from "next/link"
 
 export default function page() {
 
@@ -20,8 +19,6 @@ export default function page() {
                 Vissza a főoldalra
               </Link>
             </Button>
-
-
           </div>
         </section>
       </div>
