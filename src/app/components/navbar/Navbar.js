@@ -121,7 +121,11 @@ export default function NavBar() {
         }>
 
           <ul>
-            <li className="p-4 text-3xl hover:text-gray-500 ">
+            <li
+              onClick={() => setOpen(false)}
+              className="p-4 text-3xl hover:text-gray-500
+            
+             ">
               <Link href='/'>
                 Főoldal
               </Link>
@@ -131,7 +135,9 @@ export default function NavBar() {
                 Kapcsolat
               </Link>
             </li>
-            <li className="p-4 text-3xl hover:text-gray-500">
+            <li
+              onClick={() => setOpen(false)}
+              className="p-4 text-3xl hover:text-gray-500">
               <Link href='#campaigns'>
                 Eredményeink
               </Link>

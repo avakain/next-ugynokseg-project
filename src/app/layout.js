@@ -20,7 +20,6 @@ export default function RootLayout({ children }) {
 
   const shouldHideNavAndFooter = pathname === '/login-admin' ||
     pathname === '/admin' ||
-    pathname === '/form' ||
     pathname === '/success';
 
   return (
