@@ -13,9 +13,9 @@ export default function page() {
             <div className="color-purple mb-5 text-2xl text-center text-purple-700 text-bold">Kész.</div>
             <h3 className="h3 mb-5 color-black text-2xl text-center">Köszönjük az érdeklődést!</h3>
             <p className="text-lg text-center mb-5">A csapatunk hamarosan jelentkezni fog.</p>
-            <Link href='../'>
+            <Link href='../' className="w-70% block">
               <Button
-                className="w-70% block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Vissza a főoldalra
               </Button>
             </Link>
