@@ -4,6 +4,7 @@ import emailjs from '@emailjs/browser';
 import Button from '../components/button/Button';
 import { useRouter } from 'next/navigation'
 import ReCAPTCHA from 'react-google-recaptcha';
+import Link from 'next/link';
 
 
 
@@ -12,11 +13,15 @@ export default function ContactUs() {
   const form = useRef();
   const router = useRouter();
   const [isHuman, setIsHuman] = useState(true);
+  const [checked, setChecked] = useState(false);
   const handleRecaptcha = async () => {
     const isTokenValid = true;
     setIsHuman(isTokenValid);
   }
 
+  const handleCheckboxChange = (e) => {
+    setChecked(e.target.checked);
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -116,12 +121,34 @@ export default function ContactUs() {
           name="message"
           required
         />
+
+        <label className="flex items-center mt-3">
+          <input
+            type="checkbox"
+            className="form-checkbox h-5 w-5 text-red-500 rounded"
+            checked={checked}
+            onChange={handleCheckboxChange}
+          />
+          <Link href="/gdpr" >
+            <span className="ml-2 text-gray-700 cursor-pointer hover:text-violet-500">
+              Hozzájárulok adataim tárolásához
+            </span>
+          </Link>
+        </label>
+
         {<ReCAPTCHA
-          className="grid justify-items-center mb-3 auto-rows-max"
+          className="grid  my-6 auto-rows-max"
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_TEST_SITE_KEY}
           onChange={handleRecaptcha} />}
         {
-          isHuman ? <Button type="submit" className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Küldés</Button> : null
+          isHuman && checked ? (
+            <Button
+              type="submit"
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-5"
+            >
+              Küldés
+            </Button>
+          ) : null
         }
 
       </form>
