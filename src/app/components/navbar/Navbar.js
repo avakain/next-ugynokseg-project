@@ -130,7 +130,9 @@ export default function NavBar() {
                 Főoldal
               </Link>
             </li>
-            <li className="p-4 text-3xl hover:text-gray-500">
+            <li className="p-4 text-3xl hover:text-gray-500"
+              onClick={() => setOpen(false)}
+            >
               <Link href='/form'>
                 Kapcsolat
               </Link>
