@@ -7,12 +7,10 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import Link from 'next/link';
 
 
-
-
 export default function ContactUs() {
   const form = useRef();
   const router = useRouter();
-  const [isHuman, setIsHuman] = useState(true);
+  const [isHuman, setIsHuman] = useState(false);
   const [checked, setChecked] = useState(false);
   const handleRecaptcha = async () => {
     const isTokenValid = true;
@@ -122,18 +120,18 @@ export default function ContactUs() {
           required
         />
 
-        <label className="flex items-center mt-3">
+        <label className="flex items-start mt-3">
           <input
             type="checkbox"
-            className="form-checkbox h-5 w-5 text-red-500 rounded"
+            className="form-checkbox h-5 w-5 mt-1 text-red-500 rounded mr-3"
             checked={checked}
             onChange={handleCheckboxChange}
           />
-          <Link href="/gdpr" >
-            <span className="ml-2 text-gray-700 cursor-pointer hover:text-violet-500">
-              Hozzájárulok adataim tárolásához
-            </span>
-          </Link>
+          <span >
+            Hozzájárulok adataim tárolásához<Link href="/gdpr" >
+              <br />
+              <span className=" text-gray-700 cursor-pointer hover:text-violet-500 italic"> (részletek) </span> </Link>
+          </span>
         </label>
 
         {<ReCAPTCHA
@@ -150,8 +148,7 @@ export default function ContactUs() {
             </Button>
           ) : null
         }
-
       </form>
-    </div>
+    </div >
   );
 };
