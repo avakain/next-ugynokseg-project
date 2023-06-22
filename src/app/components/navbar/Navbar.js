@@ -48,7 +48,7 @@ export default function NavBar() {
           bgColor: 'transparent',
           textColor: 'white'
         });
-      } else if (scrollY < previousScrollYRef.current) {
+      } else if (scrollY < previousScrollYRef.current && pathname !== '/form') {
         setTheme({
           bgColor: 'transparent',
           textColor: 'transparent'

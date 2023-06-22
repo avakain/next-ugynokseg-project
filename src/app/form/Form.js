@@ -135,7 +135,7 @@ export default function ContactUs() {
         </label>
 
         {<ReCAPTCHA
-          className="grid  my-6 auto-rows-max"
+          className="grid my-6 auto-rows-max"
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_TEST_SITE_KEY}
           onChange={handleRecaptcha} />}
         {
