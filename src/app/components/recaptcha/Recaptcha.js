@@ -4,9 +4,11 @@ import { Recaptcha } from 'next-recaptcha';
 const RecaptchaComponent = ({ onVerify }) => {
 
   const handleVerify = (token) => {
-    onVerify(token);
+    const response = {
+      'g-recaptcha-response': token,
+    };
+    onVerify(response);
   };
-
 
   return (
     <Recaptcha

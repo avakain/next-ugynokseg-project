@@ -12,6 +12,7 @@ export default function ContactUs() {
   const router = useRouter();
   const [isHuman, setIsHuman] = useState(false);
   const [checked, setChecked] = useState(false);
+
   const handleRecaptcha = async () => {
     const isTokenValid = true;
     setIsHuman(isTokenValid);
