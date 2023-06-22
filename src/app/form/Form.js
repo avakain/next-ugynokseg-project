@@ -137,7 +137,7 @@ export default function ContactUs() {
 
         {<ReCAPTCHA
           className="grid my-6 auto-rows-max"
-          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_TEST_SITE_KEY}
           onChange={handleRecaptcha} />}
         {
           isHuman && checked ? (
