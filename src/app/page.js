@@ -6,11 +6,13 @@ import Hero from "./components/hero/Hero";
 import Influencer from "./components/influencers/Influencers"
 import Campaign from "./components/campaign/Campaign";
 import Services from "./components/services/Services";
+import HeadComponent from "./HeadComponent";
 
 export default function Home() {
 
   return (
     <main>
+      <HeadComponent />
       <Hero heading='Kimagasló elérés cégednek Influencerekkel' message='Kreatív stratégiáink és hatékony kampányaink segítségével garantáltan felhívjuk rád a figyelmet és növeljük márkád ismertségét. Lépj velünk a következő szintre!' />
       <div className="conent">
         <Results />
