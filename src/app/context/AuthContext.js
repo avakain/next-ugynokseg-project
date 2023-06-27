@@ -4,7 +4,7 @@ import {
   getAuth,
 } from 'firebase/auth';
 import firebase_app from '@/firebase/config';
-import LoadingPage from '@/app/LoadinPage';
+import LoadingPage from '@/app/pageload/LoadinPage';
 
 const auth = getAuth(firebase_app);
 

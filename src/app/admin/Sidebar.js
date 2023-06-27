@@ -1,6 +1,6 @@
 'use client'
 import React from "react";
-import { useAuthContext } from "@/context/AuthContext";
+import { useAuthContext } from "@/app/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";

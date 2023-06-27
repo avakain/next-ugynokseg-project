@@ -3,16 +3,15 @@ import './globals.css'
 import { Raleway } from 'next/font/google'
 import NavBar from './components/navbar/Navbar'
 import Footer from './components/footer/footer'
-import { AuthContextProvider } from '@/context/AuthContext'
+import { AuthContextProvider } from '@/app/context/AuthContext'
 import { usePathname } from 'next/navigation'
-import { Provider } from '@/context/AdminContext'
+import { Provider } from '@/app/context/AdminContext'
 
 const raleway = Raleway({
   subsets: ['latin'],
   weight: ['400', '700']
 })
 
-import HeadComponet from './Head'
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -23,7 +22,6 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <HeadComponet />
       <body className={raleway.className}>
         <AuthContextProvider>
           <Provider>
