@@ -7,13 +7,12 @@ import { AuthContextProvider } from '@/context/AuthContext'
 import { usePathname } from 'next/navigation'
 import { Provider } from '@/context/AdminContext'
 
-
-
 const raleway = Raleway({
   subsets: ['latin'],
   weight: ['400', '700']
 })
 
+import HeadComponet from './Head'
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -24,6 +23,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <HeadComponet />
       <body className={raleway.className}>
         <AuthContextProvider>
           <Provider>
