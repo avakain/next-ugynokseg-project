@@ -35,7 +35,7 @@ export default function CampaignItem({ campaign }) {
       </div>
       <div className="grid xs:items-start md:items-center rounded-xl  md:mx-8 ">
         <div className="m-auto">
-          <h1 className="md:text-5xl xs:text-3xl my-5 text-indigo-500 ">{campaign.name}</h1>
+          <h3 className="md:text-5xl xs:text-3xl my-5 text-indigo-500 ">{campaign.name}</h3>
           <p className="mb-2"> Kampányok kezdete: <strong className="text-red-500"> {campaign.duration} hónap </strong></p>
           <p className="mb-2"> Csatornára feliratkozók száma: <strong className="text-red-500">{formatNumber(campaign.subscribers)}+</strong></p>
           <p className="mb-2"> Elért megtekintés: <strong className="text-red-500">{formatNumber(campaign.views)}+</strong></p>
