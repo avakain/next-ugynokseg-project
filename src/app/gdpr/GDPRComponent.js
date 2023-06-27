@@ -166,8 +166,9 @@ const GDPRComponent = () => {
           •	adattárolás határideje: a cél megvalósulásáig, de legkésőbb az érintett kérelmére történő törlésig
           •	adattárolás módja: elektronikus
         </p>
-        <h3>5. Adatfeldolgozók</h3>
-
+        <br />
+        <h2 className="text-2xl font-bold mb-4">5. Adatfeldolgozók</h2>
+        <br />
         <p>
           Azugynokseg.com a személyes adatok kezelése során kizárólag technikai jellegű feladatok ellátására az alábbi adatfeldolgozót veszi igénybe:
           •	adatfeldolgozó neve: EmailJS Ltd.
