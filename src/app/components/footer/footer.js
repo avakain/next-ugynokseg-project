@@ -33,7 +33,7 @@ export default function Footer() {
             </ul>
           </div>
           <hr className="my-6 sm:mx-auto border  border-white lg:my-8" />
-          <span className="block text-sm  xs:text-center dark:text-gray-600 pb-6">&copy; 2023 <span className={anton.className}>Az ügynökség</span>
+          <span className="block text-sm  xs:text-center dark:text-gray-600 pb-6">&copy; 2023 <span className={anton.className}>Az ügynökség </span>
             All Rights Reserved.</span>
         </div>
       </footer >

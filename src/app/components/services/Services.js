@@ -9,7 +9,7 @@ const content = {
   items: [
     {
       icon: <TbRulerMeasure size={35} className='mr-5 p-1 bg-gradient-to-tr  from-indigo-500  to-red-500  text-white rounded-md' />,
-      text: "Kampány- és influencer stratégiai tervezés",
+      text: "Kampány és influencer stratégiai tervezés",
     },
     {
       icon: <RiPaletteFill size={35} className='mr-5 p-1 bg-gradient-to-tr  from-indigo-500  to-red-500  text-white rounded-md' />,
@@ -21,7 +21,7 @@ const content = {
     },
     {
       icon: <FiGlobe size={35} className='mr-5 p-1 bg-gradient-to-tr  from-indigo-500  to-red-500  text-white rounded-md' />,
-      text: "Tik-tok, Instagramm és Facebook fiókok kezelés",
+      text: "Tik-tok, Instagram és Facebook fiókok kezelése",
     },
   ],
 };

@@ -10,7 +10,7 @@ const CASE_STUDY = [
     id: 1,
     svg: <ImEye size={30} />,
     header: '150M+',
-    subtitle: 'Megtekintés értünk el',
+    subtitle: 'Megtekintést értünk el',
     colored: 'kevesebb mint egy év alatt',
   },
   {
@@ -32,7 +32,7 @@ const CASE_STUDY = [
     svg: <BiCheckDouble size={30} />,
     header: '350k+',
     subtitle: 'Megtekintés',
-    colored: 'áltlagosan videonként',
+    colored: 'átlagosan videonként',
   },
 ];
 
