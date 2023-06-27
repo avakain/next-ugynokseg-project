@@ -5,6 +5,7 @@ import Button from "../components/button/Button"
 export default function page() {
   return (
     <div className='sm:m-auto md:max-w-xl'>
+
       <GDPRComponent />
       <Link href="/form" >
         <div className='flex '>
