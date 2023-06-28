@@ -104,12 +104,14 @@ export default function NavBar() {
             <AiOutlineClose
               size={30}
               onClick={handleCLick}
+              className="cursor-pointer"
 
             />
             : <AiOutlineMenu
               size={30}
               onClick={handleCLick}
               style={{ color: textColor }}
+              className="cursor-pointer"
             />}
 
         </div>
