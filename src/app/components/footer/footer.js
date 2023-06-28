@@ -27,7 +27,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/form" className="hover:underline">
-                  Contact
+                  Kapcsolat
                 </Link>
               </li>
             </ul>

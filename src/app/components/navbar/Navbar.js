@@ -43,7 +43,7 @@ export default function NavBar() {
 
     const changeColor = () => {
       const { scrollY } = window;
-      if (scrollY <= 90 && pathname === '/') {
+      if (scrollY <= 90 && pathname !== '/form') {
         setTheme({
           bgColor: 'transparent',
           textColor: 'white'
