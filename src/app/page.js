@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <main>
       <Hero
-        heading='Engedje, hogy vállalkozása kitűnjön a TikTok dzsungelében'
+        heading='"Engedje, hogy vállalkozása kitűnjön a TikTok dzsungelében!"'
         message=' Professzionális oldalak építése!' />
       <div className="conent">
         <Results />
