@@ -11,7 +11,7 @@ import "swiper/css/navigation";
 
 
 
-export default function Testimonials() {
+export default function Testimonials({ header, header2 }) {
 
 
 
@@ -58,9 +58,9 @@ export default function Testimonials() {
           >
             <div className="max-w-xl text-left ltr:sm:text-left rtl:sm:text-right">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                {'Ne nekünk higgy... '}
+                {header}
                 <br className="hidden sm:block lg:hidden" />
-                Hidd az ügyfeleinknek!
+                {header2}
               </h2>
 
             </div>
