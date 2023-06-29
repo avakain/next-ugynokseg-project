@@ -4,7 +4,7 @@ import Button from '../button/Button';
 import Link from 'next/link';
 
 
-export default function Introducion({ header, title, title2, title3 }) {
+export default function Introducion({ header, title, title2 }) {
   return (
 
     <div className="flex flex-col items-center justify-center md:flex-row w-50 m-8">
@@ -13,7 +13,7 @@ export default function Introducion({ header, title, title2, title3 }) {
         <h2 className="text-3xl">{header}</h2>
         <p className="my-4 text-lg">{title}</p>
         <p className="my-4 text-lg">{title2}</p>
-        <p className="my-4 text-lg">{title3}</p>
+
         <Link href="/form" >
           <div className='flex md:block'>
             <Button className={"bg-indigo-500 px-8 py-2 sm:px-20 md:px-32 hover:bg-indigo-700 xs:flex-grow md:block duration-100 text-white mt-8 "}
@@ -25,7 +25,5 @@ export default function Introducion({ header, title, title2, title3 }) {
         <div />
       </div >
     </div >
-
-
   )
 }
