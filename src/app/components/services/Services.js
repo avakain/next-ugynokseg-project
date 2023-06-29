@@ -26,18 +26,17 @@ const content = {
   ],
 };
 
-export default function WeBelive() {
+export default function Services({ header, title, title2 }) {
   return (
-    <div className="grid md:grid-cols-2 xs:grid-cols-1 md:gap-6 lg:gap-10 bg-slate-100 p-6">
-      <div className="flex flex-col justify-center md:col-start-1 md:col-end-2 xs:mb-8">
-        <h3 className="mb-8 text-3xl md:hidden">Hatékony közvetítés</h3>
+    <div className="grid md:grid-cols-2 xs:grid-cols-1 md:gap-10 bg-slate-100 p-6">
+      <div className="flex flex-col  md:col-start-1 md:col-end-2 xs:mb-8">
+        <h3 className="my-8 text-3xl ">{header}</h3>
         <p className="text-lg">
-          Mi őszintén hiszünk abban, amit csinálunk, a pontosan megtervezett kampányok sikereiben, amivel a közönség könnyen tud azonosulni.
+          {title}
         </p>
         <br className="m-3 " />
         <p className="text-lg">
-          Az általunk készített videókban fontos számunkra, hogy élményt adjunk nézőinknek a tartalmaink által.
-          Így lesz az influencer marketing sikeres és hatásos.
+          {title2}
         </p>
       </div>
       <div className="grid items-center">

@@ -7,7 +7,7 @@ import Influencer from "./components/influencers/Influencers"
 import Campaign from "./components/campaign/Campaign";
 import Services from "./components/services/Services";
 
-/* export const metadata = {
+export const metadata = {
   title: 'Az Ügynökség - Influencer Marketing a Sikerért',
   description: 'Az influencer marketing egy nagyon hatékony eszköz a vállalkozások számára, mert lehetővé teszi, hogy közvetlen kapcsolatot építsenek ki a célközönséggel.',
   icons: [
@@ -29,13 +29,15 @@ import Services from "./components/services/Services";
       url: '/favicon/apple-touch-icon.png',
     },
   ],
-} */
+}
 
 
 export default function Home() {
   return (
     <main>
-      <Hero heading='Kimagasló elérés cégednek Influencerekkel' message='Kreatív stratégiáink és hatékony kampányaink segítségével garantáltan felhívjuk rád a figyelmet és növeljük márkád ismertségét. Lépj velünk a következő szintre!' />
+      <Hero
+        heading='Engedje, hogy vállalkozása kitűnjön a TikTok dzsungelében'
+        message=' Professzionális oldalak építése!' />
       <div className="conent">
         <Results />
         <Introducion
@@ -45,7 +47,11 @@ export default function Home() {
            `}
           title3={'Légy te a következő sikertörténetünk!'}
         />
-        <Services />
+        <Services
+          header={'Az Ön sikere a mi szenvedélyünk'}
+          title={'Úgy gondoljuk, hogy minden vállalkozásnak megvan a lehetősége a TikTok népszerűségének kiaknázására. Célunk, hogy a marketing tevékenységével lendületet adjunk vállalkozásának, növeljük az online jelenlétét és támogassuk növekedését.'}
+          title2={'Hagyja, hogy szakértelmünk vezesse - TikTok marketing csapatunk mélyrehatóan ismeri a platformot, és átfogó stratégiát dolgoz ki vállalkozása számára. Az oldalépítéstől kezdve az influenszer kampányokig minden részletre odafigyelünk, hogy a legjobb eredményeket érjük el.'}
+        />
         <Campaign />
         <Carousel />
       </div>
