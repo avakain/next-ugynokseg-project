@@ -41,16 +41,16 @@ export default function Home() {
       <div className="conent">
         <Results />
         <Introducion
-          header={'Növeld az online elérésed'}
-          title={'Az influencer marketing egy nagyon hatékony eszköz a vállalkozások számára, mert lehetővé teszi, hogy közvetlen kapcsolatot építsenek ki a célközönséggel.'}
-          title2={`Függetlenül attól, hogy milyen céljaid vannak, mekkora a vállalkozásod, vagy hol helyezkedsz el. A mi segítségünkkel könnyen elérheted a célközönségedet.
+          header={'Az Ön sikere a mi szenvedélyünk'}
+          title={'Úgy gondoljuk, hogy minden vállalkozásnak megvan a lehetősége a TikTok népszerűségének kiaknázására. '}
+          title2={`Célunk, hogy a marketing tevékenységével lendületet adjunk vállalkozásának, növeljük az online jelenlétét és támogassuk növekedését
            `}
-          title3={'Légy te a következő sikertörténetünk!'}
+
         />
         <Services
-          header={'Az Ön sikere a mi szenvedélyünk'}
-          title={'Úgy gondoljuk, hogy minden vállalkozásnak megvan a lehetősége a TikTok népszerűségének kiaknázására. Célunk, hogy a marketing tevékenységével lendületet adjunk vállalkozásának, növeljük az online jelenlétét és támogassuk növekedését.'}
-          title2={'Hagyja, hogy szakértelmünk vezesse - TikTok marketing csapatunk mélyrehatóan ismeri a platformot, és átfogó stratégiát dolgoz ki vállalkozása számára. Az oldalépítéstől kezdve az influenszer kampányokig minden részletre odafigyelünk, hogy a legjobb eredményeket érjük el.'}
+          header={'Hagyja, hogy szakértelmünk vezesse'}
+          title={'TikTok marketing csapatunk mélyrehatóan ismeri a platformot, és átfogó stratégiát dolgoz ki vállalkozása számára.'}
+          title2={'Az oldalépítéstől kezdve az influenszer kampányokig minden részletre odafigyelünk, hogy a legjobb eredményeket érjük el.'}
         />
         <Campaign />
         <Carousel />
