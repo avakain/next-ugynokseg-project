@@ -1,13 +1,12 @@
-"use client"
 import Introducion from "./components/intro/Introducion"
 import Results from "./components/resulticonblock/Results"
 import Carousel from "./components/testimonials/Testimonials"
 import Hero from "./components/hero/Hero";
-import Influencer from "./components/influencers/Influencers"
 import Campaign from "./components/campaign/Campaign";
 import Services from "./components/services/Services";
 
-/* export const metadata = {
+
+const metadata = {
   title: 'Az Ügynökség - Influencer Marketing a Sikerért',
   description: 'Az influencer marketing egy nagyon hatékony eszköz a vállalkozások számára, mert lehetővé teszi, hogy közvetlen kapcsolatot építsenek ki a célközönséggel.',
   icons: [
@@ -30,7 +29,7 @@ import Services from "./components/services/Services";
     },
   ],
 }
- */
+
 
 export default function Home() {
   return (
