@@ -23,6 +23,7 @@ export default function Campaign() {
       } catch (error) {
         console.log(error);
       }
+
     };
     fetchCampaigns();
   }, []);

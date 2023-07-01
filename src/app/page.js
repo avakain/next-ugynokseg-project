@@ -5,7 +5,7 @@ import Hero from "./components/hero/Hero";
 import Campaign from "./components/campaign/Campaign";
 import Services from "./components/services/Services";
 import NavBar from './components/navbar/Navbar'
-import Footer from './components/footer/footer'
+import Footer from './components/footer/Footer'
 
 
 export const metadata = {
