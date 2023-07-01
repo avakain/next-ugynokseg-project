@@ -5,7 +5,7 @@ import Hero from "./components/hero/Hero";
 import Campaign from "./components/campaign/Campaign";
 import Services from "./components/services/Services";
 import NavBar from './components/navbar/Navbar'
-import Footer from './components/footer/Footer'
+import FooterComponent from './components/footer/FooterComponent'
 
 
 export const metadata = {
@@ -58,7 +58,7 @@ export default function Home() {
         <Campaign />
         <Carousel header={'Nekünk higgyen... '} header2={'Hanem az ügyfeleinknek!'} />
       </div>
-      <Footer />
+      <FooterComponent />
     </main>
   )
 }
