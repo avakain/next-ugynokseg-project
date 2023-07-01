@@ -1,8 +1,6 @@
-"use client"
 import dynamic from 'next/dynamic'
 import NavBar from '../components/navbar/Navbar'
 import Footer from '../components/footer/Footer'
-
 
 const Form = dynamic(
   () => import('./Form'),

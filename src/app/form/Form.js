@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import ReCAPTCHA from 'react-google-recaptcha';
 import Link from 'next/link';
 
-
 export default function ContactUs() {
   const form = useRef();
   const router = useRouter();
