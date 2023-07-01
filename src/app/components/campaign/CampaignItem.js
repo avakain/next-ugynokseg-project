@@ -3,7 +3,6 @@ import Button from "../button/Button";
 import Link from "next/link";
 
 
-
 export default function CampaignItem({ campaign }) {
   const imageLoader = ({ src, width, height }) => {
     return `${src}?w=${width}&h=${height}`;

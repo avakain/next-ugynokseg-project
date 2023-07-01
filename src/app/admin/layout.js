@@ -1,6 +1,4 @@
-import SideBar from "./Sidebar";
 import { AuthContextProvider } from '@/app/context/AuthContext'
-import { usePathname } from 'next/navigation'
 import { Provider } from '@/app/context/AdminContext'
 
 export default function AdminLayout({
@@ -10,7 +8,6 @@ export default function AdminLayout({
     <AuthContextProvider>
       <Provider>
         <section>
-          {/* Include shared UI here e.g. a header or sidebar */}
           {children}
         </section>
       </Provider>
