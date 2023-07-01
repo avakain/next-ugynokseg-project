@@ -4,6 +4,8 @@ import Carousel from "./components/testimonials/Testimonials"
 import Hero from "./components/hero/Hero";
 import Campaign from "./components/campaign/Campaign";
 import Services from "./components/services/Services";
+import NavBar from './components/navbar/Navbar'
+import Footer from './components/footer/footer'
 
 
 export const metadata = {
@@ -33,7 +35,9 @@ export const metadata = {
 
 export default function Home() {
   return (
+
     <main>
+      <NavBar />
       <Hero
         heading='Engedje, hogy vállalkozása kitűnjön a “TikTok-dzsungelben”!'
         message='Influenszer marketing és TikTok-oldalak építése!' />
@@ -54,6 +58,7 @@ export default function Home() {
         <Campaign />
         <Carousel header={'Nekünk higgyen... '} header2={'Hanem az ügyfeleinknek!'} />
       </div>
+      <Footer />
     </main>
   )
 }
