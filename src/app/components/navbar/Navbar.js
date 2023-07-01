@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 const anton = Anton({
   subsets: ['latin'],
-  weight: ['400',]
+  weight: ['400']
 })
 
 

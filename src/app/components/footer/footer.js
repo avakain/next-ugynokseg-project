@@ -1,13 +1,10 @@
 import { Anton } from "next/font/google";
-import { Anaheim } from "next/font/google";
 import Link from "next/link";
 
 const anton = Anton({
   subsets: ['latin'],
-  weight: ['400',]
+  weight: ['400']
 })
-
-
 
 export default function Footer() {
   return (
