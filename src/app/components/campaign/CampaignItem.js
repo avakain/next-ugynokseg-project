@@ -41,7 +41,7 @@ export default function CampaignItem({ campaign }) {
           <Link href="/form">
             <Button className={"bg-indigo-500 px-8 py-2 sm:px-20 md:px-32 hover:bg-indigo-700 xs:hidden md:block duration-100 text-white mt-16 "}
             >
-              Írj nekünk
+              Írjon nekünk
             </Button>
           </Link>
         </div>
@@ -49,7 +49,7 @@ export default function CampaignItem({ campaign }) {
           <div className='flex md:block'>
             <Button className={"bg-indigo-500 px-8 py-2 sm:px-20 md:px-32 hover:bg-indigo-700 xs:flex-grow sm:block  md:hidden duration-100 text-white mt-8 sm:max-w-400"}
             >
-              Írj nekünk
+              Írjon nekünk
             </Button>
           </div>
         </Link>
